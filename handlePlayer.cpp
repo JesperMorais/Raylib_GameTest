@@ -1,4 +1,5 @@
 #include "handlePlayer.hpp"
+#include "include/raymath.h"
 
 
 void Player::drawPlayer(){
@@ -7,11 +8,12 @@ void Player::drawPlayer(){
         DrawGrid(10, 1.0f);
 }
 
-void Player::checkIfMovePlayer(){
-    if (IsKeyDown(KEY_W)) position.z -= 0.1f;
-    if (IsKeyDown(KEY_S)) position.z += 0.1f;
-    if (IsKeyDown(KEY_A)) position.x -= 0.1f;
-    if (IsKeyDown(KEY_D)) position.x += 0.1f;
+void Player::checkIfMovePlayer(){ //TODO: tilt camera when moving a specific direction
+    float speed = 1.00f;
+    if (IsKeyDown(KEY_W)) position.z = Lerp(position.z, position.z - speed, 0.4f); //start, end speed of lerp
+    if (IsKeyDown(KEY_S)) position.z = Lerp(position.z, position.z + speed, 0.4f);
+    if (IsKeyDown(KEY_A)) position.x = Lerp(position.x, position.x - speed, 0.4f);
+    if (IsKeyDown(KEY_D)) position.x = Lerp(position.x, position.x + speed, 0.4f);
 }   
 
 void Player::showCurrentHealth(int health){

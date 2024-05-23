@@ -4,10 +4,6 @@
 #include "handleCamera.hpp"
 #include "handleEnemy.hpp"  
 #include <string>
-
-static void UpdateDrawFrame(Player player, Camera camera, Enemy enemy);
-
-
 int main(void)
 {
     Camera camera = { 0 }; // Define the camera to look into our 3d world
@@ -26,22 +22,26 @@ int main(void)
 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
-
+    
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        UpdateDrawFrame(player, camera, enemy); 
+
         player.checkIfMovePlayer(); //fungerar
         checkCameraMovment(&camera, &player.position); //fungerar
-        player.showCurrentHealth(player.health); //fungerar
         enemy.moveEnemy();
-           
+
+        if(player.checkCollision(enemy.getEnemyPosList(), player.position)){
+            DrawText("Collision", 200, 200, 20, RED);
+            if (player.hasCollided == false){
+                player.health--;
+            }
+            player.hasCollided = true;    
+        }else
+            player.hasCollided = false;
         
-        if(player.checkCollision(enemy.getEnemyPosList(), player.position) && !player.takenDamage)
-        {
-            player.health--;
-            player.takenDamage = true;
-        }
+
+        DrawText(TextFormat("Health: %i", player.health), 80, 100, 60, RED);
 
         BeginDrawing();
             ClearBackground(RAYWHITE);
@@ -60,17 +60,4 @@ int main(void)
 
     return 0;
 }
-
-static void UpdateDrawFrame(Player player, Camera camera, Enemy enemy){
-    BeginDrawing();
-        ClearBackground(RAYWHITE);
-        BeginMode3D(camera); 
-
-        player.drawPlayer(); //draw player
-        enemy.drawEnemy(); //draw enemy
-        EndMode3D();
-
-    EndDrawing();
-}
-
 

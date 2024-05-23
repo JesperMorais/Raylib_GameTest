@@ -10,7 +10,7 @@ class Player{
     public:     
         Vector3 position; //vart spelaren är
         Vector3 size = {2.0f, 2.0f , 2.0f};
-        bool takenDamage = false;
+        bool hasCollided = false;
         int health;
         Player(){position = {0.0f, 0.0f, 0.0f}, health=3;} //konstruktor
         

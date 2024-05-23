@@ -37,12 +37,9 @@ void Player::showCurrentHealth(int health){
 
  int Player::checkCollision(vector<Vector3>& enemyPosList, Vector3 playerPos){
     for (const auto& enemyPos : enemyPosList) {
-            if ((enemyPos.z <= playerPos.z + size.z) &&
-                (playerPos.z <= enemyPos.z + size.z) &&
-                (enemyPos.x <= playerPos.x + size.x) &&
-                (playerPos.x <= enemyPos.x + size.x)) {
+            if (CheckCollisionSpheres(playerPos, 2.0f, enemyPos, 2.0f)) {
                 return 1;
             }
         }
-        return 0;
-    }
+    return 0;
+ }

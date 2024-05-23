@@ -6,17 +6,23 @@
 
 using namespace std;
 
+//TODO: Powerups ( health and speed)
+//TODO: out of bounds check
+//TODO: fixa sväng mechaniken
+//TODO: 
+
+
 class Player{
     public:     
         Vector3 position; //vart spelaren är
-        Vector3 size = {2.0f, 2.0f , 2.0f};
         bool hasCollided = false;
         int health;
-        Player(){position = {0.0f, 0.0f, 0.0f}, health=3;} //konstruktor
+        float maxSpeed;
+        Vector3 currentSpeed {0.0f, 0.0f, 0.0f};
+        Player(){position = {0.0f, 0.0f, 0.0f}, health=3, maxSpeed = 0.8f;} //konstruktor
         
-        
-        void drawPlayer();
-        void checkIfMovePlayer();
-        void showCurrentHealth(int health);
-        int checkCollision(vector<Vector3>& enemyPos, Vector3 playerPos);
+        void draw();
+        void move();
+        void takeDamage();
+        void checkCollision(vector<Vector3>& enemiesPosList);
 };

@@ -6,40 +6,43 @@
 #define enemyAmount 10 
 using namespace std;
 
-void Player::drawPlayer(){
+void Player::draw(){
         DrawCube(position, 2.0f, 2.0f, 2.0f, RED);
         DrawCubeWires(position, 2.0f, 2.0f, 2.0f, MAROON);
         DrawGrid(10, 1.0f);
 }
 
-void Player::checkIfMovePlayer(){ //TODO: tilt camera when moving a specific direction
-    float speed = 00.50f;
-    if (IsKeyDown(KEY_W)) position.z = Lerp(position.z, position.z - speed, 0.4f); //start, end speed of lerp
-    if (IsKeyDown(KEY_S)) position.z = Lerp(position.z, position.z + speed, 0.4f); 
-    if (IsKeyDown(KEY_A)) position.x = Lerp(position.x, position.x - speed, 0.4f);
-    if (IsKeyDown(KEY_D)) position.x = Lerp(position.x, position.x + speed, 0.4f);
+void Player::move(){ //TODO: tilt camera when moving a specific direction
+
+    if (IsKeyDown(KEY_W)) currentSpeed.z = Lerp(currentSpeed.z, -maxSpeed, 0.02f);
+    else if (IsKeyDown(KEY_S)) currentSpeed.z = Lerp(currentSpeed.z, maxSpeed, 0.02f);
+    
+    if (IsKeyDown(KEY_A)) currentSpeed.x = Lerp(currentSpeed.x, -maxSpeed, 0.02f);
+    else if (IsKeyDown(KEY_D)) currentSpeed.x = Lerp(currentSpeed.x, maxSpeed, 0.02f);
+    
+    if (!IsKeyDown(KEY_W)) currentSpeed.z = Lerp(currentSpeed.z, 0.0f, 0.02f);
+    else if (!IsKeyDown(KEY_S)) currentSpeed.z = Lerp(currentSpeed.z, 0.0f, 0.02f);
+
+    if (!IsKeyDown(KEY_A)) currentSpeed.x = Lerp(currentSpeed.x, 0.0f, 0.02f);
+    else if (!IsKeyDown(KEY_D)) currentSpeed.x = Lerp(currentSpeed.x, 0.0f, 0.02f);
+
+    position.x += currentSpeed.x;
+    position.z += currentSpeed.z;
 }   
 
-void Player::showCurrentHealth(int health){
-    if (health == 3){
-        DrawText("Health: <3 <3 <3", 200, 100, 20, RED);
-    }
-    else if(health == 2){
-        DrawText("Health: <3 <3", 200, 100, 20, RED);
-    }
-    else if(health == 1){
-        DrawText("Health: <3", 200, 100, 20, RED);
-    }
-    else{
-        DrawText("Health: ", 200, 100, 20, RED);
-    }
-}
-
- int Player::checkCollision(vector<Vector3>& enemyPosList, Vector3 playerPos){
+void Player::checkCollision(vector<Vector3>& enemyPosList){
     for (const auto& enemyPos : enemyPosList) {
-            if (CheckCollisionSpheres(playerPos, 2.0f, enemyPos, 2.0f)) {
-                return 1;
+            if (CheckCollisionSpheres(position, 1.0f, enemyPos, 1.0f)) {
+                if (hasCollided == false){
+                takeDamage();
+            }
+            hasCollided = true; 
             }
         }
-    return 0;
+    hasCollided = false;
  }
+
+ void Player::takeDamage(){
+     health--;
+     currentSpeed.z = 0.4f;
+}

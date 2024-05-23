@@ -1,13 +1,16 @@
 #include "handleEnemy.hpp"
 
+using namespace std;
+
 void Enemy::drawEnemy(){
-    DrawCube(enemyPos, 2.0f, 2.0f, 2.0f, BLUE);
-    DrawCubeWires(enemyPos, 2.0f, 2.0f, 2.0f, DARKBLUE);
+    for (const auto& enemyPos : enemyPosList) {
+        DrawCube(enemyPos, 2.0f, 2.0f, 2.0f, BLUE);
+        DrawCubeWires(enemyPos, 2.0f, 2.0f, 2.0f, DARKBLUE);
+    }
 }   
 
 void Enemy::moveEnemy(){
-    enemyPos.z += 0.1f;
-    if(enemyPos.z > 20.0f) {
-        enemyPos.z = -20.0f;
+    for (auto& enemyPos : enemyPosList) {
+        enemyPos.z += 0.2f;
     }
 }

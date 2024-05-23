@@ -1,7 +1,10 @@
 #include "handlePlayer.hpp"
 #include "include/raymath.h"
-#include "include/raylib.h"
+#include <iostream>
 
+
+#define enemyAmount 10 
+using namespace std;
 
 void Player::drawPlayer(){
         DrawCube(position, 2.0f, 2.0f, 2.0f, RED);
@@ -18,11 +21,28 @@ void Player::checkIfMovePlayer(){ //TODO: tilt camera when moving a specific dir
 }   
 
 void Player::showCurrentHealth(int health){
-    DrawText(TextFormat("Health: %i", health), 40, 80, 20, RED);  
+    if (health == 3){
+        DrawText("Health: <3 <3 <3", 200, 100, 20, RED);
+    }
+    else if(health == 2){
+        DrawText("Health: <3 <3", 200, 100, 20, RED);
+    }
+    else if(health == 1){
+        DrawText("Health: <3", 200, 100, 20, RED);
+    }
+    else{
+        DrawText("Health: ", 200, 100, 20, RED);
+    }
 }
 
-int Player::check(Vector3 enemyPos, Vector3 playerPos){
-    
-    CheckCollisionBoxes(playerPos , out, enemyPos, out);
-    return 1;
-}
+ int Player::checkCollision(vector<Vector3>& enemyPosList, Vector3 playerPos){
+    for (const auto& enemyPos : enemyPosList) {
+            if ((enemyPos.z <= playerPos.z + size.z) &&
+                (playerPos.z <= enemyPos.z + size.z) &&
+                (enemyPos.x <= playerPos.x + size.x) &&
+                (playerPos.x <= enemyPos.x + size.x)) {
+                return 1;
+            }
+        }
+        return 0;
+    }

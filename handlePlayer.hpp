@@ -1,14 +1,16 @@
 #pragma once
 
 #include "include/raylib.h"
-#include <stdio.h>
 #include <iostream>
+#include <vector>
+
+using namespace std;
 
 class Player{
     public:     
         Vector3 position; //vart spelaren är
-        Vector3 out = {2.0f, 2.0f , 2.0f};
-        
+        Vector3 size = {2.0f, 2.0f , 2.0f};
+        bool takenDamage = false;
         int health;
         Player(){position = {0.0f, 0.0f, 0.0f}, health=3;} //konstruktor
         
@@ -16,5 +18,5 @@ class Player{
         void drawPlayer();
         void checkIfMovePlayer();
         void showCurrentHealth(int health);
-        int check(Vector3 enemyPos, Vector3 playerPos);
+        int checkCollision(vector<Vector3>& enemyPos, Vector3 playerPos);
 };

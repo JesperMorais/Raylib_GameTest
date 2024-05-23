@@ -7,6 +7,7 @@
 
 static void UpdateDrawFrame(Player player, Camera camera, Enemy enemy);
 
+
 int main(void)
 {
     Camera camera = { 0 }; // Define the camera to look into our 3d world
@@ -29,12 +30,29 @@ int main(void)
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {
-        DrawText("Hello World!", 200, 80, 20, WHITE);
         UpdateDrawFrame(player, camera, enemy); 
-        player.checkIfMovePlayer();
-        checkCameraMovment(&camera, &player.position);
-        player.showCurrentHealth(player.health);
+        player.checkIfMovePlayer(); //fungerar
+        checkCameraMovment(&camera, &player.position); //fungerar
+        player.showCurrentHealth(player.health); //fungerar
         enemy.moveEnemy();
+           
+        
+        if(player.checkCollision(enemy.getEnemyPosList(), player.position) && !player.takenDamage)
+        {
+            player.health--;
+            player.takenDamage = true;
+        }
+
+        BeginDrawing();
+            ClearBackground(RAYWHITE);
+            BeginMode3D(camera); 
+
+                player.drawPlayer(); //draw player
+                enemy.drawEnemy(); //draw enemy
+
+            EndMode3D();
+
+        EndDrawing();
 
     }
 

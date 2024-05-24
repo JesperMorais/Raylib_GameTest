@@ -1,32 +1,84 @@
 #include "handleEnemy.hpp"
 using namespace std;
 
-void Enemies::initRandomizePositions(){
+void infantry::draw(){
+    for (int i = 0; i < (int)infantryPosList.size(); i++){
+        DrawCube(infantryPosList[i], 2.0f, 2.0f, 2.0f, GREEN);
+        DrawCubeWires(infantryPosList[i], 2.0f, 2.0f, 2.0f, DARKGREEN);
+    }
+}
+
+void infantry::move(Vector3 playerPosition){
+    for (auto& infantryPos : infantryPosList) {
+        infantryPos.z += 0.2f;
+        if (infantryPos.z > playerPosition.z + 20.0f) {
+            infantryPos.z = playerPosition.z - 40.0f;
+            randomizeXPositions(infantryPos);
+        }
+    }
+}
+
+void infantry::initRandomizePositions(){
     SetRandomSeed(GetRandomValue(0, 1000));
-    for (int i = 0; i < enemyAmount; i++){
+
+    for (int i = 0; i < amountOfInfantry; i++){
         float x = GetRandomValue(-ROOM_WIDTH, ROOM_WIDTH);
         float z = GetRandomValue(-40, -10);
-        enemyPosList.push_back({x, 0.0f, z});
+        
+        //if(!checkCollision({x, 0.0f, z})){           
+            infantryPosList.push_back({x, 0.0f, z});
+        //}
     } 
 }
 
-void Enemies::randomizePositions(Vector3& enemyPos){
+void infantry::randomizeXPositions(Vector3& enemyPos){
     enemyPos.x = GetRandomValue(-ROOM_WIDTH, ROOM_WIDTH);
 }
 
-void Enemies::draw(){
-    for (int i = 0; i < (int)enemyPosList.size(); i++){
-        DrawCube(enemyPosList[i], 2.0f, 2.0f, 2.0f, BLUE);
-        DrawCubeWires(enemyPosList[i], 2.0f, 2.0f, 2.0f, DARKBLUE);
-    }
-}   
+vector<Vector3>& infantry::getAllPosList(){
+    return infantryPosList;
+}
 
-void Enemies::move(Vector3 playerPosition){
-    for (auto& enemyPos : enemyPosList) {
-        enemyPos.z += 0.2f;
-        if (enemyPos.z > playerPosition.z + 20.0f) {
-            enemyPos.z = playerPosition.z - 40.0f;
-            randomizePositions(enemyPos);
+void Zombie::draw(){
+    for (int i = 0; i < (int)zombiePosList.size(); i++){
+        DrawCube(zombiePosList[i], 2.0f, 2.0f, 2.0f, PURPLE);
+        DrawCubeWires(zombiePosList[i], 2.0f, 2.0f, 2.0f, DARKPURPLE);
+    }
+}
+
+void Zombie::move(Vector3 playerPosition){
+    for (auto& zombiePos : zombiePosList) {
+        zombiePos.z += 0.2f;
+        if(playerPosition.x > zombiePos.x && playerPosition.z > zombiePos.z){ //går mot spelaren med inte efter den gått förbi
+            zombiePos.x += 0.08f;
+        }
+        else if(playerPosition.x < zombiePos.x && playerPosition.z > zombiePos.z){
+            zombiePos.x -= 0.08f;
+        }
+        if (zombiePos.z > playerPosition.z + 20.0f) {
+            zombiePos.z = playerPosition.z - 40.0f;
+            randomizeXPositions(zombiePos);
         }
     }
+}
+
+void Zombie::initRandomizePositions(){
+    SetRandomSeed(GetRandomValue(0, 1000));
+
+    for (int i = 0; i < amountOfZombies; i++){
+        float x = GetRandomValue(-ROOM_WIDTH, ROOM_WIDTH);
+        float z = GetRandomValue(-40, -10);
+        
+        //if(!checkCollision({x, 0.0f, z})){           
+            zombiePosList.push_back({x, 0.0f, z});
+        //}
+    } 
+}
+
+vector<Vector3>& Zombie::getAllPosList(){
+    return zombiePosList;
+}
+
+void Zombie::randomizeXPositions(Vector3& enemyPos){
+    enemyPos.x = GetRandomValue(-ROOM_WIDTH, ROOM_WIDTH);
 }

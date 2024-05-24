@@ -27,14 +27,22 @@ void Player::move(){ //TODO: tilt camera when moving a specific direction
 }   
 
 void Player::checkCollision(vector<Vector3>& enemyPosList){
-    for (const auto& enemyPos : enemyPosList) {
-            if (CheckCollisionSpheres(position, 1.0f, enemyPos, 1.0f)) {
-                if (hasCollided == false){
+    vector<int> indicesToRemove; // Temporary container to store indices of elements to remove
+
+    for (size_t i = 0; i < enemyPosList.size(); ++i) {
+        const auto& enemyPos = enemyPosList[i];
+        if (CheckCollisionSpheres(position, 1.0f, enemyPos, 1.0f)) {
+            indicesToRemove.push_back(i); // Store index of element to remove
+            if (hasCollided == false) {
                 takeDamage();
             }
-            hasCollided = true; 
-            }
+            hasCollided = true;
         }
+    }
+    // Remove elements from the list based on collected indices
+    for (auto it = indicesToRemove.rbegin(); it!= indicesToRemove.rend(); ++it) {
+        enemyPosList.erase(enemyPosList.begin() + *it);
+    }
     hasCollided = false;
  }
 

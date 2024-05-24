@@ -28,7 +28,7 @@ int main(void)
     {
         checkCameraMovment(&camera, &player.position); //flyttar kameran efter spelaren
         player.move(); //flyttar spelaren vid behov
-        enemies.move(); //flyttar fienden
+        enemies.move(player.position); //flyttar fienden beroende på spelarens position
         player.checkCollision(enemies.getEnemyPosList()); //kollar om spelaren kolliderar med fienden
        
         DrawText(TextFormat("Health: %i", player.health), 80, 100, 60, RED);

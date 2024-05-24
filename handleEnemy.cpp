@@ -22,11 +22,11 @@ void Enemies::draw(){
     }
 }   
 
-void Enemies::move(){
+void Enemies::move(Vector3 playerPosition){
     for (auto& enemyPos : enemyPosList) {
         enemyPos.z += 0.2f;
-        if (enemyPos.z > 40) {
-            enemyPos.z = -40;
+        if (enemyPos.z > playerPosition.z + 20.0f) {
+            enemyPos.z = playerPosition.z - 40.0f;
             randomizePositions(enemyPos);
         }
     }

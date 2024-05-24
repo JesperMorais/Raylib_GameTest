@@ -1,9 +1,16 @@
 #include "include/raylib.h"
 #include "include/raymath.h"
 
+Camera initCamera(){
+    Camera camera = { 0 }; // Define the camera to look into our 3d world
+    camera.position = { 0.0f, 5.0f, 12.0f };  
+    camera.target = { 0.0f, 0.0f, 0.0f };    
+    camera.up = { 0.0f, 1.0f, 0.0f };    
+    camera.fovy = 70.0f;                               // Field-of-view Y  
+    camera.projection = CAMERA_PERSPECTIVE;    
+    return camera;
+}
 
-//TODO: tilt camera when moving a specific direction
-//fix larp when moving camera
 void checkCameraMovment(Camera *camera, Vector3 *playerPosition){
     camera->target.x = Lerp(camera->target.x, playerPosition->x, 0.1f); //start, end , speed of lerp
     camera->target.y = Lerp(camera->target.y, playerPosition->y, 0.1f);

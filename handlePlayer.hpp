@@ -9,7 +9,6 @@ using namespace std;
 //TODO: Powerups ( health and speed)
 //TODO: out of bounds check
 //TODO: fixa sväng mechaniken
-//TODO: 
 
 
 class Player{

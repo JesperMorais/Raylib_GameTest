@@ -1,5 +1,4 @@
 #include "handleEnemy.hpp"
-
 using namespace std;
 
 void Enemies::initRandomizePositions(){

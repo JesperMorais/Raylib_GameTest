@@ -6,22 +6,18 @@
 #include <string>
 int main(void)
 {
-    Camera camera = { 0 }; // Define the camera to look into our 3d world
-    Player player;
-    Enemies enemies;
-    camera.position = { 0.0f, 5.0f, 12.0f };  
-    camera.target = { 0.0f, 0.0f, 0.0f };    
-    camera.up = { 0.0f, 1.0f, 0.0f };    
-    camera.fovy = 70.0f;                               // Field-of-view Y  
-    camera.projection = CAMERA_PERSPECTIVE;          // Camera mode type
+    Player player; //initierar spelaren
+    Enemies enemies; //initierar fienden
+    Camera camera = initCamera(); //initierar kameran
 
     const int screenWidth = 800;
     const int screenHeight = 800;
 
     InitWindow(screenWidth, screenHeight, "COOL GAME");
-
+ 
     SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
     //--------------------------------------------------------------------------------------
+    
     
     // Main game loop
     while (!WindowShouldClose())    // Detect window close button or ESC key
@@ -32,7 +28,6 @@ int main(void)
         player.checkCollision(enemies.getEnemyPosList()); //kollar om spelaren kolliderar med fienden
        
         DrawText(TextFormat("Health: %i", player.health), 80, 100, 60, RED);
-
         BeginDrawing();
             ClearBackground(RAYWHITE);
             BeginMode3D(camera); 
@@ -45,7 +40,6 @@ int main(void)
         EndDrawing();
 
     }
-
     CloseWindow();
 
     return 0;

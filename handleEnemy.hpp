@@ -13,15 +13,13 @@ class Enemies{
         
         Enemies(){
             initRandomizePositions();
-        }
+            } //konstruktor
 
-        void draw();
-        void move();
-        void initRandomizePositions();
-        void randomizePositions(Vector3& enemyPos);
+        void draw(); //spawnar fiender
+        void move(); //flyttar fiender och hanterar hur de respawnar
+        void initRandomizePositions(); //initierar fiendernas positioner
+        void randomizePositions(Vector3& enemyPos); //randomiserar fiendernas positioner när de respawnar
 
-        vector<Vector3>& getEnemyPosList(){
-            return enemyPosList;
-            }
+        vector<Vector3>& getEnemyPosList(){ return enemyPosList; }
         
 };

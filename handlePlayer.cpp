@@ -1,9 +1,6 @@
 #include "handlePlayer.hpp"
 #include "include/raymath.h"
 #include <iostream>
-
-
-#define enemyAmount 10 
 using namespace std;
 
 void Player::draw(){
@@ -13,7 +10,6 @@ void Player::draw(){
 }
 
 void Player::move(){ //TODO: tilt camera when moving a specific direction
-
     if (IsKeyDown(KEY_W)) currentSpeed.z = Lerp(currentSpeed.z, -maxSpeed, 0.02f);
     else if (IsKeyDown(KEY_S)) currentSpeed.z = Lerp(currentSpeed.z, maxSpeed, 0.02f);
     

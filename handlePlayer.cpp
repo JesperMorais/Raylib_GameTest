@@ -47,6 +47,6 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
  }
 
  void Player::takeDamage(){
-     health--;
-     currentSpeed.z = 0.4f;
+    health--;
+    currentSpeed.z = 0.4f;
 }

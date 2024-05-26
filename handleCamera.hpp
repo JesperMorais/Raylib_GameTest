@@ -1,7 +1,9 @@
+#pragma once
+
 #include "include/raylib.h"
 #include "include/raymath.h"
 
-Camera initCamera(){
+Camera initCamera3D(){
     Camera camera = { 0 }; // Define the camera to look into our 3d world
     camera.position = { 0.0f, 5.0f, 12.0f };  
     camera.target = { 0.0f, 0.0f, 0.0f };    
@@ -9,6 +11,15 @@ Camera initCamera(){
     camera.fovy = 70.0f;                               // Field-of-view Y  
     camera.projection = CAMERA_PERSPECTIVE;    
     return camera;
+}
+
+Camera2D initCamera2D_2D(){
+    Camera2D camera2D = { 0 };
+    camera2D.target = { 0.0f, 0.0f };
+    camera2D.offset = { 0.0f, 0.0f };
+    camera2D.rotation = 0.0f;
+    camera2D.zoom = 1.0f;
+    return camera2D;
 }
 
 void checkCameraMovment(Camera *camera, Vector3 *playerPosition){

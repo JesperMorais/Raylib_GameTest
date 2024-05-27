@@ -52,6 +52,8 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
             static Sound sound = LoadSoundFromWave(wave);
             PlaySound(sound);
         }
+    
     health--;
     currentSpeed.z = 0.4f;
+    
 }

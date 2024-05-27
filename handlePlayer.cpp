@@ -47,6 +47,11 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
  }
 
  void Player::takeDamage(){
+    if(IsAudioDeviceReady()){  
+            static Wave wave = LoadWave("sounds/Sidechain_bip.3.wav");
+            static Sound sound = LoadSoundFromWave(wave);
+            PlaySound(sound);
+        }
     health--;
     currentSpeed.z = 0.4f;
 }

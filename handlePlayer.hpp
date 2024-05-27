@@ -29,8 +29,8 @@ class Player{
         Player(){position = {0.0f, 0.0f, 0.0f}, orientation = {0.0f, 0.0f, 0.0f}, health=3, maxSpeed = 0.5f;
             particles.resize(50); //skapar 100 partiklar
              for (auto& p : particles) {
-                p.position = { position.x + 0.5f, position.y, position.z + GetRandomValue(-10.0f, 10.0f) };
-                p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
+                p.position = {position.x + 0.1f, position.y-1.0f, position.z + GetRandomValue(-1.0f, 1.0f) };
+                p.velocity = {(float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f)};
                 p.lifespan = 0.5f;
         }
         } //konstruktor

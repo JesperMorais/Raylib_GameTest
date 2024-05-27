@@ -81,15 +81,7 @@ int main(void)
                 EndDrawing();
                 DrawText(TextFormat("Health: %i", player.health), 10, 20, 30, RED);
                 DrawText(TextFormat("Enemies left: %i", zombie.getActiveEnemies() + infantry.getActiveEnemies()), 10, 60, 30, RED); 
-                
-                if(player.health <= 0){
-                    DrawText("GAME OVER", 10, 300, 60, RED);
-                    DrawText("Press BACKSPACE to exit", 10, 400, 40, RED);
-                    if(IsKeyDown(KEY_BACKSPACE)){
-                        showMenu = true;
-                    }
-                }
-       }  
+       } 
     }
     CloseWindow();
     CloseAudioDevice();

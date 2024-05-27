@@ -72,7 +72,7 @@ void Player::updateParticles(float deltaTime){
      static float lastSpawnTime = 0.0f;
     const float maxDistance = 6.0f; // Maximum distance between particles and player
     const float minZOffset = -5.0f;
-    const float maxZOffset = 2.0f;
+    const float maxZOffset = 3.0f;
 
     for (auto& p : particles) {
         // Move the particle
@@ -84,7 +84,7 @@ void Player::updateParticles(float deltaTime){
         float distance = Vector3Distance(p.position, position);
         if (distance > maxDistance) {
             // Respawn particle near the player within a range on the Z-axis
-            p.position = { position.x + 0.5f, position.y, position.z + GetRandomValue(minZOffset, maxZOffset) };
+            p.position = { position.x + 0.5f, position.y-1.0f, position.z + GetRandomValue(minZOffset, maxZOffset) };
             p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
             p.lifespan = 0.5f;
         }
@@ -92,7 +92,7 @@ void Player::updateParticles(float deltaTime){
         if (p.lifespan <= 0.0f) {
             // Respawn particle near the player after its lifespan ends
             if (deltaTime - lastSpawnTime > 0.5f) {
-                p.position = { position.x + 0.5f, position.y, position.z + GetRandomValue(minZOffset, maxZOffset) };
+                p.position = { position.x + 0.5f, position.y-1.0f, position.z + GetRandomValue(minZOffset, maxZOffset) };
                 p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
                 p.lifespan = 0.5f;
                 lastSpawnTime = deltaTime;

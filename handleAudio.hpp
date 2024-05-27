@@ -13,12 +13,3 @@ void playAudio(){
             }
         }
 }
-
-void playCollisionSound(){
-    if(IsAudioDeviceReady()){  
-            static Wave wave = LoadWave("sounds/Sidechain_bip.3.wav");
-            static Sound sound = LoadSoundFromWave(wave);
-            PlaySound(sound);
-        }
-}
-

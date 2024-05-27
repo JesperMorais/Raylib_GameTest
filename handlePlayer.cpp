@@ -47,7 +47,7 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
  }
 
  void Player::takeDamage(){
-    if(IsAudioDeviceReady()){  
+    if(IsAudioDeviceReady()){   //plays sound when player takes damage
             static Wave wave = LoadWave("sounds/Sidechain_bip.3.wav");
             static Sound sound = LoadSoundFromWave(wave);
             PlaySound(sound);

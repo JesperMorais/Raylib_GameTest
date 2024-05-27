@@ -19,8 +19,7 @@ int main(void)
 
     InitWindow(screenWidth, screenHeight, "COOL GAME");
     InitAudioDevice();
-    SetTargetFPS(60);               // Set our game to run at 60 frames-per-second
-    //--------------------------------------------------------------------------------------
+    SetTargetFPS(60);             
     
     Model model = LoadModel("models/boat.obj"); // Load OBJ model
     Texture2D texture = LoadTexture("models/Texture/wood1.jpg"); // Load model texture'

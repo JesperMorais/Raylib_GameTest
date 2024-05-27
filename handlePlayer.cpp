@@ -69,7 +69,6 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
 }
 
 void Player::updateParticles(float deltaTime){
-     static float lastSpawnTime = 0.0f;
     const float maxDistance = 6.0f; // Maximum distance between particles and player
     const float minZOffset = -5.0f;
     const float maxZOffset = 3.0f;
@@ -78,7 +77,6 @@ void Player::updateParticles(float deltaTime){
         // Move the particle
         p.position.y += p.velocity.y * deltaTime * 5.0f;
         p.position.z += p.velocity.z * deltaTime * 5.0f;
-        p.lifespan -= deltaTime;
 
         // Check if particle is too far from player
         float distance = Vector3Distance(p.position, position);
@@ -86,17 +84,6 @@ void Player::updateParticles(float deltaTime){
             // Respawn particle near the player within a range on the Z-axis
             p.position = { position.x + 0.5f, position.y-1.0f, position.z + GetRandomValue(minZOffset, maxZOffset) };
             p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
-            p.lifespan = 0.5f;
-        }
-
-        if (p.lifespan <= 0.0f) {
-            // Respawn particle near the player after its lifespan ends
-            if (deltaTime - lastSpawnTime > 0.5f) {
-                p.position = { position.x + 0.5f, position.y-1.0f, position.z + GetRandomValue(minZOffset, maxZOffset) };
-                p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
-                p.lifespan = 0.5f;
-                lastSpawnTime = deltaTime;
-            }
         }
     }
 }

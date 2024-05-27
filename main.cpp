@@ -71,7 +71,7 @@ int main(void)
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
 
-                        player.draw(); //draw playerhttps://www.phind.com/search?cache=w4gog9kc4cs9vnbrbh3l77u2
+                        player.draw(); //draw player
                         zombie.draw(); //draw enemy
                         infantry.draw(); //draw enemy
                         healthPowerUp.draw(); //draw powerup

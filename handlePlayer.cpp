@@ -7,24 +7,35 @@ void Player::draw(){
         DrawCube(position, 2.0f, 2.0f, 2.0f, RED);
         DrawCubeWires(position, 2.0f, 2.0f, 2.0f, MAROON);
         DrawGrid(10, 1.0f);
+        Vector3 direction = { sin(DEG2RAD * orientation.y), 0, cos(DEG2RAD * orientation.y) };
+        Vector3 endPoint = { position.x + direction.x * 10, position.y, position.z + direction.z * 10 }; // Extend 10 units in front
+        DrawLine3D(position, endPoint, LIME); // Draw a line from the boat to the endpoint
+        drawParticles();
 }
 
 void Player::move(){ //TODO: tilt camera when moving a specific direction
     if (IsKeyDown(KEY_W)) currentSpeed.z = Lerp(currentSpeed.z, -maxSpeed, 0.02f);
     else if (IsKeyDown(KEY_S)) currentSpeed.z = Lerp(currentSpeed.z, maxSpeed, 0.02f);
-    
-    if (IsKeyDown(KEY_A)) currentSpeed.x = Lerp(currentSpeed.x, -maxSpeed, 0.02f);
-    else if (IsKeyDown(KEY_D)) currentSpeed.x = Lerp(currentSpeed.x, maxSpeed, 0.02f);
-    
-    if (!IsKeyDown(KEY_W)) currentSpeed.z = Lerp(currentSpeed.z, 0.0f, 0.02f);
-    else if (!IsKeyDown(KEY_S)) currentSpeed.z = Lerp(currentSpeed.z, 0.0f, 0.02f);
+    else currentSpeed.z = Lerp(currentSpeed.z, 0.0f, 0.02f); // Smoothly stop if no input
 
-    if (!IsKeyDown(KEY_A)) currentSpeed.x = Lerp(currentSpeed.x, 0.0f, 0.02f);
-    else if (!IsKeyDown(KEY_D)) currentSpeed.x = Lerp(currentSpeed.x, 0.0f, 0.02f);
+    // Turning
+    float turnSpeed = 0.9f; // Slower turning speed for boat-like movement
+    if (IsKeyDown(KEY_A)) orientation.y += turnSpeed; // Decrease yaw for left turn
+    else if (IsKeyDown(KEY_D)) orientation.y -= turnSpeed; // Increase yaw for right turn
 
-    position.x += currentSpeed.x;
-    position.z += currentSpeed.z;
-}   
+    // Normalize orientation to avoid values getting too large
+    orientation.y = fmod(orientation.y, 360.0f);
+    if (orientation.y < 0) orientation.y += 360.0f;
+
+    // Calculate direction based on orientation
+    Vector3 direction = { sin(DEG2RAD * orientation.y), 0, cos(DEG2RAD * orientation.y) };
+
+    // Update position based on current speed and direction
+    position.x += currentSpeed.z * direction.x;
+    position.z += currentSpeed.z * direction.z;
+
+    updateParticles(GetFrameTime());
+}
 
 void Player::checkCollision(vector<Vector3>& enemyPosList){
     vector<int> indicesToRemove; // Temporary container to store indices of elements to remove
@@ -55,5 +66,44 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
     
     health--;
     currentSpeed.z = 0.4f;
-    
 }
+
+void Player::updateParticles(float deltaTime){
+     static float lastSpawnTime = 0.0f;
+    const float maxDistance = 6.0f; // Maximum distance between particles and player
+    const float minZOffset = -5.0f;
+    const float maxZOffset = 2.0f;
+
+    for (auto& p : particles) {
+        // Move the particle
+        p.position.y += p.velocity.y * deltaTime * 5.0f;
+        p.position.z += p.velocity.z * deltaTime * 5.0f;
+        p.lifespan -= deltaTime;
+
+        // Check if particle is too far from player
+        float distance = Vector3Distance(p.position, position);
+        if (distance > maxDistance) {
+            // Respawn particle near the player within a range on the Z-axis
+            p.position = { position.x + 0.5f, position.y, position.z + GetRandomValue(minZOffset, maxZOffset) };
+            p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
+            p.lifespan = 0.5f;
+        }
+
+        if (p.lifespan <= 0.0f) {
+            // Respawn particle near the player after its lifespan ends
+            if (deltaTime - lastSpawnTime > 0.5f) {
+                p.position = { position.x + 0.5f, position.y, position.z + GetRandomValue(minZOffset, maxZOffset) };
+                p.velocity = { (float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f) };
+                p.lifespan = 0.5f;
+                lastSpawnTime = deltaTime;
+            }
+        }
+    }
+}
+
+void Player::drawParticles() {
+        for (const auto& p : particles) {
+            DrawCube(p.position, 0.2f, 0.2f, 0.2f, BLUE);
+        }
+    }
+

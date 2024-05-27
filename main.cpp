@@ -75,9 +75,7 @@ int main(void)
                         zombie.draw(); //draw enemy
                         infantry.draw(); //draw enemy
                         healthPowerUp.draw(); //draw powerup
-                        healthPowerUp.updateLine(player.position); //draw line between player and powerup
-                        if(IsModelReady(model))
-                            DrawModel(model, player.position, 0.50f, WHITE); // Draw 3d model with texture
+                        //healthPowerUp.updateLine(player.position); //draw line between player and powerup
                     EndMode3D();
 
                 EndDrawing();

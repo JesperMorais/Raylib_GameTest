@@ -26,6 +26,6 @@ void checkCameraMovment(Camera *camera, Vector3 *playerPosition, Vector3 *player
     float distance = 10.0f; // Adjust this value as needed to set the desired distance
 
     // Set the camera's position to be behind the player, maintaining the specified distance
-    camera->position.x = playerPosition->x + direction.x * distance;
-    camera->position.z = playerPosition->z + direction.z * distance;
+    camera->position.x = Lerp(camera->position.x, playerPosition->x + direction.x * distance, 0.5f);
+    camera->position.z = Lerp(camera->position.z, playerPosition->z + direction.z * distance, 0.5f);
 }

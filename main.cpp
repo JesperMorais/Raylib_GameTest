@@ -18,7 +18,7 @@ int main(void)
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Zombie zombie(5); //initierar fienden
-    infantry infantry(10); //initierar fienden
+    infantry infantry(40); //initierar fienden
     Camera camera = initCamera3D(); //initierar kameran
     Menu menu; //initierar menyn
 

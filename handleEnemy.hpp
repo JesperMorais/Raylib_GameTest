@@ -43,6 +43,7 @@ class infantry : public Enemies{
         int getActiveEnemies() override {
             return (int)infantryPosList.size();
         }
+        int checkCollision(Vector3 infPos);
 
 };
 

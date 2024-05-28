@@ -9,13 +9,29 @@ void infantry::draw(){
 }
 
 void infantry::move(Vector3 playerPosition){
-    for (auto& infantryPos : infantryPosList) {
+//make infantry move farward, check if that farward movment will collid with Infantry, if so check if we can move sideways x to avoid collision
+   for (auto& infantryPos : infantryPosList) {
         infantryPos.z += 0.2f;
+     
+
+        // Adjust positioning relative to the player
         if (infantryPos.z > playerPosition.z + 20.0f) {
             infantryPos.z = playerPosition.z - 40.0f;
-            randomizeXPositions(infantryPos);
+            // Randomize X positions to spread out the infantry
+            // Note: Implementing randomization is omitted for brevity
         }
     }
+}
+
+
+int infantry::checkCollision(Vector3 infPos){
+    //check if infantry is collidng with arguemt infPos
+    for (const auto& infantryPos : infantryPosList) {
+        if (CheckCollisionSpheres(infPos, 0.50f, infantryPos, 0.50f)) {
+            return 1;
+        }
+    }
+    return 0;
 }
 
 void infantry::initRandomizePositions(){

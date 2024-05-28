@@ -70,8 +70,8 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
 
 void Player::updateParticles(float deltaTime){
     const float maxDistance = 6.0f; // Maximum distance between particles and player
-    const float minZOffset = -5.0f;
-    const float maxZOffset = 3.0f;
+    const float minZOffset = -1.0f;
+    const float maxZOffset = 1.0f;
 
     for (auto& p : particles) {
         // Move the particle

@@ -13,19 +13,19 @@ Camera initCamera3D(){
     return camera;
 }
 
-Camera2D initCamera2D_2D(){
-    Camera2D camera2D = { 0 };
-    camera2D.target = { 0.0f, 0.0f };
-    camera2D.offset = { 0.0f, 0.0f };
-    camera2D.rotation = 0.0f;
-    camera2D.zoom = 1.0f;
-    return camera2D;
-}
+void checkCameraMovment(Camera *camera, Vector3 *playerPosition, Vector3 *playerOrientation){
+       // Follow the player
+    camera->target.x = Lerp(camera->target.x, playerPosition->x, 0.5f);
+    camera->target.y = Lerp(camera->target.y, playerPosition->y, 0.5f);
+    camera->target.z = Lerp(camera->target.z, playerPosition->z, 0.5f);
 
-void checkCameraMovment(Camera *camera, Vector3 *playerPosition){
-    camera->target.x = Lerp(camera->target.x, playerPosition->x, 0.1f); //start, end , speed of lerp
-    camera->target.y = Lerp(camera->target.y, playerPosition->y, 0.1f);
-    camera->target.z = Lerp(camera->target.z, playerPosition->z, 0.1f);
-    camera->position.x = Lerp(camera->position.x, playerPosition->x, 0.1f);
-    camera->position.z = Lerp(camera->position.z, playerPosition->z + 12, 0.1f);
+    // Calculate the direction vector based on player orientation
+    Vector3 direction = { sin(DEG2RAD * playerOrientation->y), 0, cos(DEG2RAD * playerOrientation->y) };
+
+    // Determine the distance from the player to the camera
+    float distance = 10.0f; // Adjust this value as needed to set the desired distance
+
+    // Set the camera's position to be behind the player, maintaining the specified distance
+    camera->position.x = playerPosition->x + direction.x * distance;
+    camera->position.z = playerPosition->z + direction.z * distance;
 }

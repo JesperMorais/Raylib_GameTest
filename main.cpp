@@ -58,8 +58,8 @@ int main(void)
                 EndDrawing();
             }
             else{
-                playAudio();
-                checkCameraMovment(&camera, &player.position); //flyttar kameran efter spelaren
+                //playAudio();
+                checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
                 zombie.move(player.position); //flyttar fienden beroende på spelarens position
                 infantry.move(player.position); //flyttar fienden beroende på spelarens position

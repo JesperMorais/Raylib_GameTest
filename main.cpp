@@ -6,21 +6,22 @@
 #include "handleMenu.hpp"
 #include <string>
 
-
 int main(void)
 {
     const int screenWidth = 800;
     const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, "COOL GAME");
+
     InitAudioDevice();
-    SetTargetFPS(60);             
-    
+    SetTargetFPS(60);   
+
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Zombie zombie(5); //initierar fienden
-    infantry infantry(40); //initierar fienden
+    infantry infantry(5); //initierar fienden
     Camera camera = initCamera3D(); //initierar kameran
     Menu menu; //initierar menyn
+    Model model = LoadModel("models/schoolbus.obj"); // Load OBJ model
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {   
@@ -28,7 +29,7 @@ int main(void)
                 menu.playMenu();
             }
             else{
-                //playAudio();      
+                playAudio();      
                 checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
                 zombie.move(player.position); //flyttar fienden beroende på spelarens position
@@ -40,6 +41,7 @@ int main(void)
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
+                        DrawModel(model, {0.0f, 0.0f, 0.0f}, 1.0f, WHITE); // Draw 3d model with texture
                         player.draw(); //draw player
                         zombie.draw(); //draw enemy
                         infantry.draw(); //draw enemy
@@ -51,6 +53,7 @@ int main(void)
                 DrawText(TextFormat("Enemies left: %i", zombie.getActiveEnemies() + infantry.getActiveEnemies()), 10, 60, 30, RED); 
        } 
     }
+    UnloadModel(model); // Unload model data
     CloseWindow();
     CloseAudioDevice();
     return 0;

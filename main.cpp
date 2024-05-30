@@ -21,7 +21,18 @@ int main(void)
     infantry infantry(5); //initierar fienden
     Camera camera = initCamera3D(); //initierar kameran
     Menu menu; //initierar menyn
-    Model model = LoadModel("models/schoolbus.obj"); // Load OBJ model
+
+    const char* ModelPath = "models/skolBuss1glb.glb";
+    Model bussModel = LoadModel(ModelPath); // Load OBJ model
+  
+
+
+
+
+    if(!IsModelReady(bussModel)){
+        cout << "Model not loaded" << endl;
+        return -1;
+    }
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {   
@@ -41,7 +52,7 @@ int main(void)
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
-                        DrawModel(model, {0.0f, 0.0f, 0.0f}, 1.0f, WHITE); // Draw 3d model with texture
+                        DrawModel(bussModel, player.position , 0.10f, WHITE); // Draw 3d model with texture
                         player.draw(); //draw player
                         zombie.draw(); //draw enemy
                         infantry.draw(); //draw enemy
@@ -53,7 +64,7 @@ int main(void)
                 DrawText(TextFormat("Enemies left: %i", zombie.getActiveEnemies() + infantry.getActiveEnemies()), 10, 60, 30, RED); 
        } 
     }
-    UnloadModel(model); // Unload model data
+    UnloadModel(bussModel); // Unload model data
     CloseWindow();
     CloseAudioDevice();
     return 0;

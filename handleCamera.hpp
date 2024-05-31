@@ -1,14 +1,11 @@
 #pragma once
 
-#include "include/raylib.h"
-#include "include/raymath.h"
-
 Camera initCamera3D(){
     Camera camera = { 0 }; // Define the camera to look into our 3d world
-    camera.position = { 0.0f, 5.0f, 12.0f };  
+    camera.position = { 0.0f, 8.0f, 12.0f };  
     camera.target = { 0.0f, 0.0f, 0.0f };    
-    camera.up = { 0.0f, 1.0f, 0.0f };    
-    camera.fovy = 70.0f;                               // Field-of-view Y  
+    camera.up = { 0.0f, 10.0f, 0.0f };    
+    camera.fovy = 60.0f;                               // Field-of-view Y  
     camera.projection = CAMERA_PERSPECTIVE;    
     return camera;
 }
@@ -23,7 +20,7 @@ void checkCameraMovment(Camera *camera, Vector3 *playerPosition, Vector3 *player
     Vector3 direction = { sin(DEG2RAD * playerOrientation->y), 0, cos(DEG2RAD * playerOrientation->y) };
 
     // Determine the distance from the player to the camera
-    float distance = 10.0f; // Adjust this value as needed to set the desired distance
+    float distance = 30.0f; // Adjust this value as needed to set the desired distance
 
     // Set the camera's position to be behind the player, maintaining the specified distance
     camera->position.x = Lerp(camera->position.x, playerPosition->x + direction.x * distance, 0.5f);

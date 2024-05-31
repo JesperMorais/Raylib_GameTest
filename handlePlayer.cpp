@@ -15,7 +15,7 @@ void Player::draw(){
     DrawModel(bussModel, modelPosition, 0.10f, WHITE); // Draw the model at the translated position
     DrawGrid(10, 1.0f);
 
-
+    //DrawWireBox(); //rita en wirebox runt bussen för debugging
     Vector3 direction = { sin(DEG2RAD * orientation.y), 0, cos(DEG2RAD * orientation.y) };
     Vector3 endPoint = { position.x + direction.x * 10, position.y, position.z + direction.z * 10 }; // Extend 10 units in front
     DrawLine3D(position, endPoint, LIME); // Draw a line from the boat to the endpoint
@@ -48,17 +48,31 @@ void Player::move(){ //TODO: tilt camera when moving a specific direction
 
 void Player::checkCollision(vector<Vector3>& enemyPosList){
     vector<int> indicesToRemove; // Temporary container to store indices of elements to remove
+    float busWidth = 4.0f; // Example width
+    float busHeight = 1.0f; // Example height
+    float busLength = 8.0f; // Example length
+
+    // Scale factors for the collision detection spheres
+    float scaleFactorX = busWidth / 2.0f;
+    float scaleFactorY = busHeight / 2.0f;
+    float scaleFactorZ = busLength / 2.0f;
 
     for (size_t i = 0; i < enemyPosList.size(); ++i) {
         const auto& enemyPos = enemyPosList[i];
-        if (CheckCollisionSpheres(position, 1.0f, enemyPos, 1.0f)) {
+
+        // Check collision along each axis
+        if (CheckCollisionSpheres(position, scaleFactorX, enemyPos, 1.0f) ||
+            CheckCollisionSpheres(position, scaleFactorY, enemyPos, 1.0f) ||
+            CheckCollisionSpheres(position, scaleFactorZ, enemyPos, 1.0f)) {
+
             indicesToRemove.push_back(i); // Store index of element to remove
-            if (hasCollided == false) {
+            if (!hasCollided) {
                 takeDamage();
             }
             hasCollided = true;
         }
     }
+
     // Remove elements from the list based on collected indices
     for (auto it = indicesToRemove.rbegin(); it!= indicesToRemove.rend(); ++it) {
         enemyPosList.erase(enemyPosList.begin() + *it);
@@ -66,7 +80,7 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
     hasCollided = false;
  }
 
- void Player::takeDamage(){
+void Player::takeDamage(){
     if(IsAudioDeviceReady()){   //plays sound when player takes damage
             static Wave wave = LoadWave("sounds/Sidechain_bip.3.wav");
             static Sound sound = LoadSoundFromWave(wave);
@@ -102,4 +116,26 @@ void Player::drawParticles() {
             DrawCube(p.position, 0.2f, 0.2f, 0.2f, BLUE);
         }
     }
+
+void Player::DrawWireBox(){
+    //DEBUG FUNCTION
+    // Define the dimensions of the bus for collision visualization
+    float busWidth = 4.0f; // Width of the bus
+    float busHeight = 5.0f; // Height of the bus
+    float busDepth = 8.0f; // Depth of the bus
+    //Draw a wirebos around the buss
+    DrawLine3D(position, {position.x + busWidth, position.y, position.z}, RED);
+    DrawLine3D(position, {position.x, position.y, position.z + busDepth}, RED);
+    DrawLine3D({position.x + busWidth, position.y, position.z}, {position.x + busWidth, position.y, position.z + busDepth}, RED);
+    DrawLine3D({position.x, position.y, position.z + busDepth}, {position.x + busWidth, position.y, position.z + busDepth}, RED);
+    DrawLine3D({position.x, position.y, position.z + busDepth}, {position.x, position.y + busHeight, position.z + busDepth}, RED);
+    DrawLine3D({position.x + busWidth, position.y, position.z + busDepth}, {position.x + busWidth, position.y + busHeight, position.z + busDepth}, RED);
+    DrawLine3D({position.x, position.y, position.z}, {position.x, position.y + busHeight, position.z}, RED);
+    DrawLine3D({position.x + busWidth, position.y, position.z}, {position.x + busWidth, position.y + busHeight, position.z}, RED);
+    DrawLine3D({position.x, position.y + busHeight, position.z}, {position.x + busWidth, position.y + busHeight, position.z}, RED);
+    DrawLine3D({position.x, position.y + busHeight, position.z}, {position.x, position.y + busHeight, position.z + busDepth}, RED);
+    DrawLine3D({position.x + busWidth, position.y + busHeight, position.z}, {position.x + busWidth, position.y + busHeight, position.z + busDepth}, RED);
+    DrawLine3D({position.x, position.y + busHeight, position.z + busDepth}, {position.x + busWidth, position.y + busHeight, position.z + busDepth}, RED);
+
+}
 

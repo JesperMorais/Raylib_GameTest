@@ -2,7 +2,7 @@
 
 Camera initCamera3D(){
     Camera camera = { 0 }; // Define the camera to look into our 3d world
-    camera.position = { 0.0f, 8.0f, 12.0f };  
+    camera.position = { 0.0f, 16.0f, 12.0f };  
     camera.target = { 0.0f, 0.0f, 0.0f };    
     camera.up = { 0.0f, 10.0f, 0.0f };    
     camera.fovy = 60.0f;                               // Field-of-view Y  

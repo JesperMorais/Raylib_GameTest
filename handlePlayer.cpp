@@ -1,16 +1,25 @@
 #include "handlePlayer.hpp"
-#include "include/raymath.h"
-#include <iostream>
+
 using namespace std;
 
 void Player::draw(){
-        DrawCube(position, 2.0f, 2.0f, 2.0f, RED);
-        DrawCubeWires(position, 2.0f, 2.0f, 2.0f, MAROON);
-        DrawGrid(10, 1.0f);
-        Vector3 direction = { sin(DEG2RAD * orientation.y), 0, cos(DEG2RAD * orientation.y) };
-        Vector3 endPoint = { position.x + direction.x * 10, position.y, position.z + direction.z * 10 }; // Extend 10 units in front
-        DrawLine3D(position, endPoint, LIME); // Draw a line from the boat to the endpoint
-        drawParticles();
+    Vector3 modelPosition = position;
+    
+    modelPosition.x += sin(DEG2RAD * orientation.y) * 5.0f; // Offset model position in front of player
+    modelPosition.z += cos(DEG2RAD * orientation.y) * 5.0f;
+
+    Matrix rotation = MatrixRotateY(DEG2RAD * (orientation.y)); // Apply rotation to the model from player orientation
+    Matrix initialCorrection = MatrixRotateY(DEG2RAD * 180.0f); // Initial rotation correction for the model
+    bussModel.transform = MatrixMultiply(rotation, initialCorrection); // Combine rotation with initial correction
+
+    DrawModel(bussModel, modelPosition, 0.10f, WHITE); // Draw the model at the translated position
+    DrawGrid(10, 1.0f);
+
+
+    Vector3 direction = { sin(DEG2RAD * orientation.y), 0, cos(DEG2RAD * orientation.y) };
+    Vector3 endPoint = { position.x + direction.x * 10, position.y, position.z + direction.z * 10 }; // Extend 10 units in front
+    DrawLine3D(position, endPoint, LIME); // Draw a line from the boat to the endpoint
+    drawParticles();
 }
 
 void Player::move(){ //TODO: tilt camera when moving a specific direction

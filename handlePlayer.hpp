@@ -1,6 +1,7 @@
 #pragma once
 
 #include "include/raylib.h"
+#include "include/raymath.h"
 #include <iostream>
 #include <vector>
 
@@ -18,6 +19,8 @@ typedef struct Particles{
 
 class Player{
     public:
+        const char* modelPath;
+        Model bussModel;
         vector<Particle> particles;  //container för partiklar
         Vector3 position; //vart spelaren är
         Vector3 orientation; //vart spelaren tittar mot
@@ -31,6 +34,9 @@ class Player{
                 p.position = {position.x + 0.1f, position.y-1.0f, position.z + GetRandomValue(-1.0f, 1.0f) };
                 p.velocity = {(float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f)};
         }
+        modelPath = "models/bussTest3.glb";
+        bussModel = LoadModel(modelPath); 
+        bussModel.transform = MatrixRotateXYZ({0.0f, DEG2RAD * 180.0f, 0.0f});
         } //konstruktor
         
         void draw();

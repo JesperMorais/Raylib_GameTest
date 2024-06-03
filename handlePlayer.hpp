@@ -21,6 +21,7 @@ class Player{
     public:
         const char* modelPath;
         Model bussModel;
+
         vector<Particle> particles;  //container för partiklar
         Vector3 position; //vart spelaren är
         Vector3 orientation; //vart spelaren tittar mot
@@ -36,7 +37,6 @@ class Player{
         }
         modelPath = "models/bussTest3.glb";
         bussModel = LoadModel(modelPath); 
-        bussModel.transform = MatrixRotateXYZ({0.0f, DEG2RAD * 180.0f, 0.0f});
         } //konstruktor
         
         void draw();

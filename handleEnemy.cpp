@@ -56,9 +56,14 @@ vector<Vector3>& infantry::getAllPosList(){
 }
 
 void Zombie::draw(){
+    // Just update the frame index and apply the animation once per frame.
+
+
+    // Draw the model at a specified position
+    
     for (int i = 0; i < (int)zombiePosList.size(); i++){
-        DrawCube(zombiePosList[i], 2.0f, 2.0f, 2.0f, PURPLE);
         DrawCubeWires(zombiePosList[i], 2.0f, 2.0f, 2.0f, DARKPURPLE);
+        DrawModel(zombieModel, {zombiePosList[i].x,(zombiePosList[i].y-1.0f), zombiePosList[i].z}, 2.0f, WHITE);
     }
 }
 

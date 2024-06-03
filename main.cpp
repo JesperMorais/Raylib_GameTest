@@ -14,13 +14,14 @@ int main(void)
 
     InitAudioDevice();
     SetTargetFPS(60);   
-
+    
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Zombie zombie(5); //initierar fienden
     infantry infantry(5); //initierar fienden
     Camera camera = initCamera3D(); //initierar kameran
     Menu menu; //initierar menyn
+    
 
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {   

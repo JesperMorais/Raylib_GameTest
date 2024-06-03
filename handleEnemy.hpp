@@ -54,10 +54,12 @@ class Zombie : public Enemies{
     public:
         int amountOfZombies;
         vector<Vector3> zombiePosList;
+        const char* zombieModelPath;
+        Model zombieModel;
 
-        Zombie(int zombies) : amountOfZombies(zombies){
-            initRandomizePositions();
 
+        Zombie(int zombies) : amountOfZombies(zombies), zombieModelPath("models/untitled.glb"), zombieModel(LoadModel(zombieModelPath)){
+            initRandomizePositions();            
         };
         
         void draw() override;

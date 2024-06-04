@@ -47,19 +47,25 @@ class infantry : public Enemies{
 
 };
 
-
-//Klass för fienden Zombie
-//Den rör sig mot spelaren men efter den nått spelarens z led slutar den och åker rakt fram
 class Zombie : public Enemies{
     public:
         int amountOfZombies;
         vector<Vector3> zombiePosList;
         const char* zombieModelPath;
         Model zombieModel;
-
-
-        Zombie(int zombies) : amountOfZombies(zombies), zombieModelPath("models/untitled.glb"), zombieModel(LoadModel(zombieModelPath)){
-            initRandomizePositions();            
+        int animCount;
+        int frameCounter;
+        ModelAnimation* animation;
+        //bool animationsLoaded = true; //debugging
+        
+        Zombie(int zombies) : amountOfZombies(zombies), zombieModelPath("models/tjej.glb"), zombieModel(LoadModel(zombieModelPath)){
+            initRandomizePositions();
+            animation = LoadModelAnimations(zombieModelPath, &animCount);
+            //for(int i = 0; i < amountOfZombies; i++)
+             //   animations.push_back(LoadModelAnimations(zombieModelPath, &animCount));
+            //if(animations.size() == 0){
+            //    animationsLoaded = false;
+            //}
         };
         
         void draw() override;

@@ -29,7 +29,7 @@ int main(void)
                 menu.playMenu();
             }
             else{
-                playAudio();      
+                //playAudio();      
                 checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
                 zombie.move(player.position); //flyttar fienden beroende på spelarens position

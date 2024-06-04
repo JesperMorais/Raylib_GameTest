@@ -56,18 +56,22 @@ vector<Vector3>& infantry::getAllPosList(){
 }
 
 void Zombie::draw(){
-    // Just update the frame index and apply the animation once per frame.
-
-
-    // Draw the model at a specified position
-    
     for (int i = 0; i < (int)zombiePosList.size(); i++){
         DrawCubeWires(zombiePosList[i], 2.0f, 2.0f, 2.0f, DARKPURPLE);
-        DrawModel(zombieModel, {zombiePosList[i].x,(zombiePosList[i].y-1.0f), zombiePosList[i].z}, 2.0f, WHITE);
+        DrawModel(zombieModel, {zombiePosList[i].x,(zombiePosList[i].y-1.0f), zombiePosList[i].z}, 15.0f, WHITE);
     }
 }
 
 void Zombie::move(Vector3 playerPosition){
+    //frameCounter++;
+    //ModelAnimation anim = *animations[0];
+    //for(int i = 0; i < amountOfZombies; i++){
+   //     UpdateModelAnimation(zombieModel, anim, frameCounter);
+    //    if(frameCounter >= animations[0]->frameCount) frameCounter = 0;
+    //}
+    frameCounter = (frameCounter + 1)%animation->frameCount;
+    UpdateModelAnimation(zombieModel, animation[0], frameCounter);
+
     for (auto& zombiePos : zombiePosList) {
         zombiePos.z += 0.2f;
         if(playerPosition.x > zombiePos.x && playerPosition.z > zombiePos.z){ //går mot spelaren med inte efter den gått förbi
@@ -85,14 +89,10 @@ void Zombie::move(Vector3 playerPosition){
 
 void Zombie::initRandomizePositions(){
     SetRandomSeed(GetRandomValue(0, 1000));
-
     for (int i = 0; i < amountOfZombies; i++){
         float x = GetRandomValue(-ROOM_WIDTH, ROOM_WIDTH);
-        float z = GetRandomValue(-40, -10);
-        
-        //if(!checkCollision({x, 0.0f, z})){           
-            zombiePosList.push_back({x, 0.0f, z});
-        //}
+        float z = GetRandomValue(-40, -10);       
+        zombiePosList.push_back({x, 0.0f, z});
     } 
 }
 

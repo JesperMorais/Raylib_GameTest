@@ -82,13 +82,13 @@ void Player::checkCollision(vector<Vector3>& enemyPosList){
 
 void Player::takeDamage(){
     if(IsAudioDeviceReady()){   //plays sound when player takes damage
-            static Wave wave = LoadWave("sounds/Sidechain_bip.3.wav");
+            static Wave wave = LoadWave("sounds/Splat.mp3");
             static Sound sound = LoadSoundFromWave(wave);
             PlaySound(sound);
         }
     
-    health--;
-    currentSpeed.z = 0.4f;
+    coins++; //increase coins when player takes damage / collides with enemy
+    currentSpeed.z += 0.2f; //saktar ner bussen vid kollision
 }
 
 void Player::updateParticles(float deltaTime){

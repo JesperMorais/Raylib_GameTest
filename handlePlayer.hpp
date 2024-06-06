@@ -26,10 +26,10 @@ class Player{
         Vector3 position; //vart spelaren är
         Vector3 orientation; //vart spelaren tittar mot
         bool hasCollided = false;
-        int health;
+        int coins = 0;
         float maxSpeed;
         Vector3 currentSpeed {0.0f, 0.0f, 0.0f};
-        Player(){position = {0.0f, 0.0f, 0.0f}, orientation = {0.0f, 0.0f, 0.0f}, health=3, maxSpeed = 0.5f;
+        Player(){position = {0.0f, 0.0f, 0.0f}, orientation = {0.0f, 0.0f, 0.0f}, maxSpeed = 0.5f;
             particles.resize(50); //skapar 100 partiklar
              for (auto& p : particles) {
                 p.position = {position.x + 0.1f, position.y-1.0f, position.z + GetRandomValue(-1.0f, 1.0f) };

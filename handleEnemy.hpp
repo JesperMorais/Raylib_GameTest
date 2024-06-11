@@ -21,20 +21,13 @@ class Enemies{
         virtual void initRandomizePositions() = 0; //initerar fienden med random positioner
         virtual void randomizeXPositions(Vector3& enemyPos) = 0; //randomiserar x positionen för en fienden
         virtual int getActiveEnemies() = 0; //returnerar antalet aktiva fiender
-        int checkCollision(Vector3 cubePos); //retunerar 1 vid kollision och 0 vid ingen kollision
 
         
 };
 
-void initilizeEnemies(Enemies* enemies, int amountOfEnemies, Vector3 playerPosition){
-    for(int i = 0; i < amountOfEnemies; i++){
-        enemies[i].initRandomizePositions();
-    }
-
-}
 
 //zombie class for a single zombie
-class zoomies : public Enemies{
+/* class zoomies : public Enemies{
     private:
         const char* modelPath = "models/zombiee.glb"; 
         Model zombieModel = LoadModel(modelPath);
@@ -42,9 +35,9 @@ class zoomies : public Enemies{
         float speed; //should be random for every zombie
         Vector3 position; //initate position when created
         Vector3 direction; //initate direction when created
-        void initRandomizePositions() override;
+        void initRandomizePositions() override; //gives random positions to the zombies only when they are created
         void checkIfIdle(Vector3 playerPosition); //updates the idle state of the zombie
-        void randomizeXPositions(Vector3& enemyPos) override;
+        void randomizeXPositions(Vector3& enemyPos) override; //randomizes the position of the zombies during the game
 
     public:
         zoomies(Vector3 playerPosition){
@@ -53,7 +46,7 @@ class zoomies : public Enemies{
         }
         void draw() override;
         void move(Vector3 position) override; //tar in spelarens position kollar även om den är idle
-};
+}; */
 
 class Zombie : public Enemies{
     public:
@@ -87,5 +80,3 @@ class Zombie : public Enemies{
         }
         
 };   
-
-//vanlig infanterist som rör sig frammåt

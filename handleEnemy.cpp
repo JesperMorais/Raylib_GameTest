@@ -53,7 +53,7 @@ void Zombie::randomizeXPositions(Vector3& enemyPos){
     enemyPos.x = GetRandomValue(-ROOM_WIDTH, ROOM_WIDTH);
 }
 
-void zoomies::draw(){
+/* void zoomies::draw(){
     DrawModel(zombieModel, position, 1.0f, WHITE);
 }
 
@@ -100,4 +100,4 @@ void zoomies::checkIfIdle(Vector3 playerPosition){
     else{
         idleState = true;
     }
-}
+} */

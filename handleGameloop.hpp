@@ -26,7 +26,8 @@ void gameloop(){
                         player.draw(); //draw player
                         healthPowerUp.draw(); //draw powerup
                         enemyManager.updateEnemies(player.position); //draw enemies
-                        enemyManager.checkCollision(player.position, player.orientation); //kollar om spelaren kolliderar med fienden
+                        if(enemyManager.checkCollision(player.position, player.orientation))
+                            player.takeDamage(); //kollar om spelaren kolliderar med fienden
                     EndMode3D();
 
                 EndDrawing();

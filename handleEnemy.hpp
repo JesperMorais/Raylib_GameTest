@@ -41,7 +41,6 @@ class Zoomies : public Enemies{
 
         void initRandomizePositions() override; //gives random positions to the zombies only when they are created
         void checkIfIdle(Vector3 playerPosition); //updates the idle state of the zombie
-        //void randomizeXPositions(Vector3& enemyPos) override; //randomizes the position of the zombies during the game
 
     public: 
         int getID()override{return id;} //returnerar id för varje zombie
@@ -68,6 +67,6 @@ class EnemieManager{
     void initEnemies(); //initiates enemies into the list
     void spawnEnemy(); //spawns a new enemy
     void updateEnemies(Vector3 playerPosition); //moves and draws the enemies
-    void checkCollision(Vector3 playerPosition, Vector3 playerOrientation); //checks if the player collides with an enemy
+    int checkCollision(Vector3 playerPosition, Vector3 playerOrientation); //checks if the player collides with an enemy return 1 if true
 };
 

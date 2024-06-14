@@ -89,7 +89,7 @@ void EnemieManager::updateEnemies(Vector3 playerPosition){
     }
 }
 
-void EnemieManager::checkCollision(Vector3 playerPosition, Vector3 playerOrientation){
+int EnemieManager::checkCollision(Vector3 playerPosition, Vector3 playerOrientation){
         for (auto it = enemies.begin(); it != enemies.end(); ) {
             if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) {
                 int enemyID = (*it)->getID();
@@ -97,10 +97,12 @@ void EnemieManager::checkCollision(Vector3 playerPosition, Vector3 playerOrienta
                 it = enemies.erase(it);
                 cout << "Removed Enemy with ID: " << enemyID << endl;
                 spawnEnemy();
+                return 1;
             } else {
                 ++it;
             }
         }
+        return 0;
 }
 
 

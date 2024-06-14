@@ -23,7 +23,7 @@ class Enemies{
 };
 
 
-//TODO: Optimera koden så att alla Zoomies har samma textur och att vi inte laddar in samma textur flera gånger (fixa lagg vid collision)
+
 //TODO: FIXA orienteringen på fienden så att den kollar åt rätt håll
 //TODO: Fixa så att fienden inte kan gå igenom väggar eller varandra
 //TODO: animationer.

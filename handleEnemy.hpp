@@ -23,15 +23,18 @@ class Enemies{
 };
 
 
-//TODO: Optimera koden så att alla Zoomies har samma textur och att vi inte laddar in samma textur flera gånger
+//TODO: Optimera koden så att alla Zoomies har samma textur och att vi inte laddar in samma textur flera gånger (fixa lagg vid collision)
 //TODO: FIXA orienteringen på fienden så att den kollar åt rätt håll
+//TODO: Fixa så att fienden inte kan gå igenom väggar eller varandra
 //TODO: animationer.
 class Zoomies : public Enemies{
     protected:
         static int ID; //id som delas mellan alla zombies
+        static Model zombieModel; //gemensam modell för alla zombies
+        static bool isModelLoaded; //kollar om modellen är laddad     
+    
     private:
-        const char* modelPath = "models/zombiee.glb"; 
-        Model zombieModel = LoadModel(modelPath);
+        static void loadZombieModel(); //laddar in modellen
         
         bool idleState = true;
         float speed; //should be random for every zombie

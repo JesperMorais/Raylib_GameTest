@@ -6,8 +6,8 @@ int main(){
     const int screenWidth = 800;
     const int screenHeight = 600;
     InitWindow(screenWidth, screenHeight, "COOL GAME"); 
-    
     Menu menu; //initierar menyn
+    
     InitAudioDevice();
     SetTargetFPS(60);   
  

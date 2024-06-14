@@ -1,6 +1,17 @@
 #include "handleEnemy.hpp"
 using namespace std;
 
+Model Zoomies::zombieModel = {};
+bool Zoomies::isModelLoaded = false;
+
+void Zoomies::loadZombieModel() {
+       if (!isModelLoaded) {
+            const char* modelPath = "models/zombiee.glb"; 
+            zombieModel = LoadModel(modelPath);
+            isModelLoaded = true;
+    }
+}
+
 void Zoomies::draw(){
     DrawModel(zombieModel, position, 5.0f, WHITE);
 }
@@ -66,7 +77,7 @@ int Zoomies::checkCollisionWithPlayer(const Vector3 playerPosition, const Vector
 int Zoomies::ID = 0;
 
 Zoomies::Zoomies(): speed(0.1f), id(++ID) { //constructor
-    zombieModel = LoadModel(modelPath);
+    loadZombieModel(); //körs bara en gång
     initRandomizePositions();
 }
 

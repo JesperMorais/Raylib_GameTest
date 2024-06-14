@@ -9,28 +9,27 @@
 void gameloop(){
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
-    Zombie zombie(15); //initierar fienden
-    //infantry infantry(5); //initierar fienden
     Camera camera = initCamera3D(); //initierar kameran
+    EnemieManager enemyManager(15); //initierar ALLA typer av fiender, kan läggas till logik senare.
+
+    enemyManager.initEnemies(); //initierar fiender in i listan från början
     
     while(!WindowShouldClose()){         
                 //playAudio();      
                 checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
-                zombie.move(player.position); //flyttar fienden beroende på spelarens position
                 healthPowerUp.move(player.position); //flyttar powerup
-                player.checkCollision(zombie.getAllPosList()); //kollar om spelaren kolliderar med fienden
-            
+                
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
                         player.draw(); //draw player
-                        zombie.draw(); //draw enemy
                         healthPowerUp.draw(); //draw powerup
+                        enemyManager.updateEnemies(player.position); //draw enemies
+                        enemyManager.checkCollision(player.position, player.orientation); //kollar om spelaren kolliderar med fienden
                     EndMode3D();
 
                 EndDrawing();
-                DrawText(TextFormat("Enemies left: %i", zombie.getActiveEnemies()), 10, 60, 30, RED); 
                 DrawText(TextFormat("COINS: %i", player.coins), 10, 10, 30, GREEN);
     }
 }

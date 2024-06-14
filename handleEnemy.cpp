@@ -25,22 +25,22 @@ void Zoomies::initRandomizePositions(){
 
 void Zoomies::move(Vector3 playerPosition){
 
-    if(playerPosition.x > position.x && playerPosition.z > position.z){ //Spelaren är till höger och framför
-        position.z += 0.1f;
-        position.x += 0.08f;
-    }
-    else if(playerPosition.x < position.x && playerPosition.z > position.z){ //Spelearen är till vänster och framför
-        position.z += 0.1f;
-        position.x -= 0.08f;
-    }
-    else if(playerPosition.x > position.x && playerPosition.z < position.z){ //Spelaren är till höger och bakom
-        position.z -= 0.1f;
-        position.x += 0.08f;
-    }
-    else if(playerPosition.x < position.x && playerPosition.z < position.z){ //Spelaren är till vänster och bakom
-        position.z -= 0.1f;
-        position.x -= 0.08f;
-    }
+    Vector3 toPlayer = Vector3Subtract(playerPosition, position);
+    float desiredYaw = atan2(toPlayer.x, toPlayer.z) * RAD2DEG;
+    
+    // Smoothly adjust orientation
+    float turnSpeed = 4.0f;
+    float lerpYaw = Lerp(orientation.y, desiredYaw, turnSpeed * GetFrameTime());
+    orientation.y = lerpYaw;
+    
+    // Calculate movement direction based on orientation
+    direction = { sin(DEG2RAD * orientation.y), 0, cos(DEG2RAD * orientation.y) };
+    
+    // Update position
+    position.x += speed * direction.x;
+    position.z += speed * direction.z;
+    
+    zombieModel.transform = MatrixRotateY(DEG2RAD * orientation.y);
 }
 
 void Zoomies::checkIfIdle(Vector3 playerPosition){

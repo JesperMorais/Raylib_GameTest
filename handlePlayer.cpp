@@ -46,39 +46,6 @@ void Player::move(){ //TODO: tilt camera when moving a specific direction
     updateParticles(GetFrameTime());
 }
 
-void Player::checkCollision(vector<Vector3>& enemyPosList){
-    vector<int> indicesToRemove; // Temporary container to store indices of elements to remove
-    float busWidth = 4.0f; // Example width
-    float busHeight = 1.0f; // Example height
-    float busLength = 8.0f; // Example length
-
-    // Scale factors for the collision detection spheres
-    float scaleFactorX = busWidth / 2.0f;
-    float scaleFactorY = busHeight / 2.0f;
-    float scaleFactorZ = busLength / 2.0f;
-
-    for (size_t i = 0; i < enemyPosList.size(); ++i) {
-        const auto& enemyPos = enemyPosList[i];
-
-        // Check collision along each axis
-        if (CheckCollisionSpheres(position, scaleFactorX, enemyPos, 1.0f) ||
-            CheckCollisionSpheres(position, scaleFactorY, enemyPos, 1.0f) ||
-            CheckCollisionSpheres(position, scaleFactorZ, enemyPos, 1.0f)) {
-
-            indicesToRemove.push_back(i); // Store index of element to remove
-            if (!hasCollided) {
-                takeDamage();
-            }
-            hasCollided = true;
-        }
-    }
-
-    // Remove elements from the list based on collected indices
-    for (auto it = indicesToRemove.rbegin(); it!= indicesToRemove.rend(); ++it) {
-        enemyPosList.erase(enemyPosList.begin() + *it);
-    }
-    hasCollided = false;
- }
 
 void Player::takeDamage(){
     if(IsAudioDeviceReady()){   //plays sound when player takes damage

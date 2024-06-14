@@ -41,6 +41,7 @@ class Zoomies : public Enemies{
 
         Vector3 position; //initate position when created
         Vector3 direction; //initate direction when created
+        Vector3 orientation; //initate orientation when created
 
         void initRandomizePositions() override; //gives random positions to the zombies only when they are created
         void checkIfIdle(Vector3 playerPosition); //updates the idle state of the zombie

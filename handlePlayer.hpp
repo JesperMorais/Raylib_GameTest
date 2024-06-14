@@ -42,7 +42,6 @@ class Player{
         void draw();
         void move();
         void takeDamage();
-        void checkCollision(vector<Vector3>& enemiesPosList);
         void updateParticles(float deltaTime); //uppdaterar partiklar tar in frames per second
         void drawParticles();
         void DrawWireBox();

@@ -3,12 +3,31 @@ using namespace std;
 
 Model Zoomies::zombieModel = {};
 bool Zoomies::isModelLoaded = false;
+int Zoomies::animCount = 0;
+ModelAnimation* Zoomies::anim = nullptr;
+int Zoomies::animFrameCounter = 0;
+ZombieAnimationType Zoomies::currentAnimation = WAVE;
 
 void Zoomies::loadZombieModel() {
-       if (!isModelLoaded) {
-            const char* modelPath = "models/zombiee.glb"; 
-            zombieModel = LoadModel(modelPath);
-            isModelLoaded = true;
+    if (!isModelLoaded) {
+        const char* modelPath = "models/zombiee.glb"; 
+        zombieModel = LoadModel(modelPath);
+        isModelLoaded = true;
+        
+        // load animations
+        anim = LoadModelAnimations(modelPath, &animCount);
+    }
+}
+
+void Zoomies::updateAnimation(ZombieAnimationType animType){
+    float currentTime = GetTime();
+
+    if(timeSinceAnimationChange > currentTime - timeSinceAnimationChange || currentAnimation != animType){
+        animFrameCounter = (animFrameCounter + 1)%animCount; //update frame counter så att animationen rullar
+        UpdateModelAnimation(zombieModel, anim[animType], animFrameCounter); //uppdaterar animationen
+        currentAnimation = animType;
+        cout << "Animation: " << animType << " is playing "<<endl;
+        timeSinceAnimationChange = currentTime;
     }
 }
 
@@ -24,7 +43,7 @@ void Zoomies::initRandomizePositions(){
 }
 
 void Zoomies::move(Vector3 playerPosition){
-
+    updateAnimation(RUN);
     Vector3 toPlayer = Vector3Subtract(playerPosition, position);
     float desiredYaw = atan2(toPlayer.x, toPlayer.z) * RAD2DEG;
     

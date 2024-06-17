@@ -7,6 +7,9 @@
 #include <string>
 
 void gameloop(){
+    const char* mapModelPath = "models/map.glb"; //sätter sökvägen till modellen
+    Model model = LoadModel(mapModelPath); //laddar in modellen
+
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Camera camera = initCamera3D(); //initierar kameran
@@ -28,7 +31,8 @@ void gameloop(){
                         enemyManager.updateEnemies(player.position); //draw enemies
                         if(enemyManager.checkCollision(player.position, player.orientation))
                             player.takeDamage(); //kollar om spelaren kolliderar med fienden
-                            
+                        
+                        DrawModel(model, {0.0f, 0.0f, 0.0f}, 300.0f, WHITE); //ritar ut modellen
                     EndMode3D();
 
                 EndDrawing();

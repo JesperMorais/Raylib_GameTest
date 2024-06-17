@@ -9,6 +9,14 @@
 
 using namespace std;
 
+enum ZombieAnimationType{
+    IDLE = 0,
+    WAVE = 1,
+    WALK = 2,
+    RUNATTACK = 3,
+    RUN = 4,
+    ATTACK = 6
+};
 
 class Enemies{
     public:
@@ -32,12 +40,17 @@ class Zoomies : public Enemies{
         static int ID; //id som delas mellan alla zombies
         static Model zombieModel; //gemensam modell för alla zombies
         static bool isModelLoaded; //kollar om modellen är laddad     
+        //animations
+        static int animCount; //antal animationer
+        static int animFrameCounter; //frame counter
+        static ZombieAnimationType currentAnimation; //nuvarande animation        
+        static ModelAnimation* anim; //lista av animationer
     
     private:
         static void loadZombieModel(); //laddar in modellen
-        
         bool idleState = true;
         float speed; //should be random for every zombie
+        unsigned int timeSinceAnimationChange = 0;
 
         Vector3 position; //initate position when created
         Vector3 direction; //initate direction when created
@@ -45,6 +58,7 @@ class Zoomies : public Enemies{
 
         void initRandomizePositions() override; //gives random positions to the zombies only when they are created
         void checkIfIdle(Vector3 playerPosition); //updates the idle state of the zombie
+        void updateAnimation(ZombieAnimationType animType); //updates the animation of the zombie
 
     public: 
         int getID()override{return id;} //returnerar id för varje zombie

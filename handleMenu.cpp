@@ -13,12 +13,12 @@ void Menu::initmenu(){
 }
 
 void Menu::playMenu(){
-    if (CheckCollisionPointRec(GetMousePosition(), startButton)) {
-                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON)) {
+    if (CheckCollisionPointRec(GetMousePosition(), startButton) || IsKeyPressed(KEY_ENTER)) {
+                if (IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_ENTER)) {
                       showMenu = false; // Hide the menu and start the game
                 }
             }           
-
+            
             if(showMenu){
                 if (CheckCollisionPointRec(GetMousePosition(), startButton)) buttonColor = buttonColorHover;
                 else buttonColor = GRAY;

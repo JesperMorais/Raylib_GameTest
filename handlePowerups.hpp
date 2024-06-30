@@ -8,6 +8,9 @@
 //fixa collision check för powerups i player
 //fixa så att powerups inte spawnar på samma position som fiender
 
+//SpeedPowerUp
+//Points2XPowerUp
+
 class PowerUp{ //template for powerups
     public:
         virtual void draw() = 0;
@@ -24,17 +27,12 @@ class HealthPowerUp : public PowerUp{
         };
 
         void draw() override{
-            DrawSphere(position, 1.0f, BLUE);
+            DrawSphere(position, 5.0f, BLUE);
 
         }
 
         void move(Vector3 playerPos) override{
-            position.y = 0.5f + 0.1f * sinf(5.0f * GetTime());
-            position.z += 0.1f;
-            
-            if(position.z > playerPos.z + 20.0f){
-                position.z = playerPos.z - 40.0f;   
-            }
+            position.y = 0.5f + 0.1f * sinf(5.0f * GetTime());          
         }
 
         Vector3 getPosition() override{

@@ -12,8 +12,7 @@ void Zoomies::loadZombieModel() {
     if (!isModelLoaded) {
         const char* modelPath = "models/zombiee.glb"; 
         zombieModel = LoadModel(modelPath);
-        isModelLoaded = true;
-        
+        isModelLoaded = true;       
         // load animations
         anim = LoadModelAnimations(modelPath, &animCount);
     }
@@ -120,16 +119,13 @@ void EnemieManager::updateEnemies(Vector3 playerPosition){
 }
 
 int EnemieManager::checkCollision(Vector3 playerPosition, Vector3 playerOrientation){
-        for (auto it = enemies.begin(); it != enemies.end(); ) {
-            if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) {
-                int enemyID = (*it)->getID();
+        for (auto it = enemies.begin(); it != enemies.end(); ++it) { //Vi går igenom listan av fiender tills den är slut
+            if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) { //om fienden vi kollar på kolliderar med spelaren tar vi bort fienden och spawnar en ny samt retunerar 1
                 delete *it;
                 it = enemies.erase(it);
-                cout << "Removed Enemy with ID: " << enemyID << endl;
+                cout << "Removed Enemy with ID: " << (*it)->getID() << endl;
                 spawnEnemy();
                 return 1;
-            } else {
-                ++it;
             }
         }
         return 0;

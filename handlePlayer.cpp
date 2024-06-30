@@ -54,7 +54,7 @@ void Player::takeDamage(){
             PlaySound(sound);
         }
     
-    coins++; //increase coins when player takes damage / collides with enemy
+    coins++; //increase coins when collides with enemy
     currentSpeed.z += 0.2f; //saktar ner bussen vid kollision
 }
 

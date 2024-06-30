@@ -4,12 +4,14 @@
 #include "handlePowerUps.hpp"
 #include "handleAudio.hpp"
 #include "handleMenu.hpp"
+#include "handleObjektiv.hpp"
 #include <string>
 
 void gameloop(){
     const char* mapModelPath = "models/map.glb"; //sätter sökvägen till modellen
     Model model = LoadModel(mapModelPath); //laddar in modellen
 
+    managePickups Pickups;
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Camera camera = initCamera3D(); //initierar kameran
@@ -26,6 +28,7 @@ void gameloop(){
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
+                        Pickups.updatePickups(player.position);
                         player.draw(); //draw player
                         healthPowerUp.draw(); //draw powerup
                         enemyManager.updateEnemies(player.position); //draw enemies
@@ -37,6 +40,7 @@ void gameloop(){
 
                 EndDrawing();
                 DrawText(TextFormat("COINS: %i", player.coins), 10, 10, 30, GREEN);
+                DrawText(TextFormat("Pickps: %d", Pickups.getPickupSize()), 10, 20 , 30, BLACK);
     }
 }
 

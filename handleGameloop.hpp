@@ -15,12 +15,14 @@ void gameloop(){
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Camera camera = initCamera3D(); //initierar kameran
-    EnemieManager enemyManager(15); //initierar ALLA typer av fiender, kan läggas till logik senare.
+    EnemieManager enemyManager(0); //initierar ALLA typer av fiender, kan läggas till logik senare.
 
     enemyManager.initEnemies(); //initierar fiender in i listan från början
     
+    
+
     while(!WindowShouldClose()){         
-                //playAudio();      
+                //playAudio();     
                 checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
                 healthPowerUp.move(player.position); //flyttar powerup
@@ -41,6 +43,8 @@ void gameloop(){
                 EndDrawing();
                 DrawText(TextFormat("COINS: %i", player.coins), 10, 10, 30, GREEN);
                 DrawText(TextFormat("Pickps: %d", Pickups.getPickupSize()), 10, 20 , 30, BLACK);
+                DrawText(TextFormat("Active Pickups: %d", Pickups.isAnyoneActive()), 10, 50, 30, BLACK);
+
     }
 }
 

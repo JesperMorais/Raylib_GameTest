@@ -26,7 +26,7 @@ void gameloop(){
                 checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
                 healthPowerUp.move(player.position); //flyttar powerup
-                
+
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
@@ -44,6 +44,7 @@ void gameloop(){
                 DrawText(TextFormat("COINS: %i", player.coins), 10, 10, 30, GREEN);
                 DrawText(TextFormat("Pickps: %d", Pickups.getPickupSize()), 10, 20 , 30, BLACK);
                 DrawText(TextFormat("Active Pickups: %d", Pickups.isAnyoneActive()), 10, 50, 30, BLACK);
+                DrawText(TextFormat("Dropoff: %d", Pickups.isDropOffActive()), 10, 80, 30, GREEN);
 
     }
 }

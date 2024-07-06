@@ -34,6 +34,7 @@ class schoolKids: public Pickups{
 
 class managePickups{
     private:
+        pickupState currentState;
         vector<Pickups*> activePickups;
     public:
         managePickups(){

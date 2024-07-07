@@ -3,16 +3,16 @@
 #include <iostream>
 using namespace std;
 
-enum pickupState {
-    READY_FOR_PICKUP,
-    PICKED_UP,
-};
+//TODO: Pil till pickupen?
+//TODO: Ge poäng till spelaren vid dropoff
+//TODO: Random position till pickupen varje gång. 
+//TODO: Modeller
 
 class Pickups{
     public:
         virtual ~Pickups(){};
-        virtual void drawPickup() = 0; //rita ut picupen
-        virtual void drawDropoff() = 0; //rita ut dropoffen
+        inline virtual void drawPickup() = 0; //rita ut picupen
+        inline virtual void drawDropoff() = 0; //rita ut dropoffen
         virtual void move(Vector3 PlayerPos) = 0; //rör på pickupem
         virtual int checkCollision(const Vector3 playerpos) = 0;
         virtual int checkCollisionDropoff(const Vector3 playerpos) = 0;
@@ -27,7 +27,6 @@ class schoolKids: public Pickups{
         };
         schoolKids(){
             pickupPosition = {10.0f, 0.0f, 10.0f};
-            dropoffPosition = {0.0f, 0.0f, -20.0f};
         };
         Vector3 pickupPosition;
         Vector3 dropoffPosition;
@@ -35,8 +34,8 @@ class schoolKids: public Pickups{
         bool isPickupActive = false; //är true när den blivit upp plockat
         bool isDropoffActive = false; //är true när den e aktiv
         
-        void drawPickup() override;
-        void drawDropoff() override;
+        inline void drawPickup() override;
+        inline void drawDropoff() override;
 
         int checkCollision(const Vector3 PlayerPos) override;
         int checkCollisionDropoff(const Vector3 playerpos) override;
@@ -69,5 +68,4 @@ class managePickups{
         
         int isAnyoneActive(); //kollar om någon pickup blivit upp plockad
         int isDropOffActive();
-        void handleDropOff(); //Hanterar allt som ska ske vid en dropoff
 };

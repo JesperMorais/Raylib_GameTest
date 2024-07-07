@@ -9,8 +9,6 @@
 using namespace std;
 
 //TODO: Powerups ( health and speed)
-//TODO: out of bounds check
-//TODO: fixa sväng mechaniken
 
 typedef struct Particles{
     Vector3 position;

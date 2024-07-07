@@ -45,7 +45,6 @@ void gameloop(){
                 DrawText(TextFormat("Pickps: %d", Pickups.getPickupSize()), 10, 20 , 30, BLACK);
                 DrawText(TextFormat("Active Pickups: %d", Pickups.isAnyoneActive()), 10, 50, 30, BLACK);
                 DrawText(TextFormat("Dropoff: %d", Pickups.isDropOffActive()), 10, 80, 30, GREEN);
-
     }
 }
 

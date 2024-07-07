@@ -1,12 +1,11 @@
 #include "handleObjektiv.hpp"
 
- 
-void schoolKids::drawPickup(){ // ska rita ut enskild pickup
+inline void schoolKids::drawPickup(){ // ska rita ut enskild pickup
     DrawSphere(pickupPosition, 2.0f, PURPLE);
     //fixa model och annat skit
 }
 
-void schoolKids::drawDropoff(){
+inline void schoolKids::drawDropoff(){
     DrawSphere(dropoffPosition, 2.0f, GREEN);
     isDropoffActive = true;
     //fixa model å animation för dropoff
@@ -59,9 +58,12 @@ int schoolKids::checkCollision(const Vector3 playerPosition){ //kolla om enskild
 }
 
 void schoolKids::setDropoffPosition(const Vector3 playerposition){
-    //int randomX = GetRandomValue((int)playerposition.x - 25,(int)playerposition.x + 25);
-    //int randomY = GetRandomValue((int)playerposition.z - 25,(int)playerposition.z + 25);
-    dropoffPosition = {0.0f, 0.0f, -30.0f};
+    if(isPickupActive && !isDropoffActive){ //om pickupen är aktiv och dropoffen inte är aktiv
+        //sätt dropoffen till en random position
+        float randomX = GetRandomValue((int)playerposition.x - 40,(int)playerposition.x + 40);
+        float randomZ = GetRandomValue((int)playerposition.z - 40,(int)playerposition.z + 40);
+        dropoffPosition = {randomX, 0.0f, randomZ};
+    }
 
     //kan göra extra kollar så den inte spawnar på oss eller liknande
 }
@@ -70,15 +72,16 @@ void managePickups::updatePickups(Vector3 playerPos){
     for(auto& pickups : activePickups){
         pickups->drawPickup();
         pickups->move(playerPos);
-        if(pickups->getIsPickupActive()){
-            pickups->drawDropoff();
-            if(pickups->checkCollisionDropoff(playerPos)){
-                activePickups.erase(activePickups.begin());
-                spawnPickup();
+        
+        if(pickups->getIsPickupActive()){ //om pickupen är aktiv
+            pickups->setDropoffPosition(playerPos); //sätt dropoffen
+            pickups->drawDropoff(); //rita ut dropoffen
+            
+            if(pickups->checkCollisionDropoff(playerPos)){ 
+                activePickups.erase(activePickups.begin()); //tarbort pickupen
+                spawnPickup(); //spawnar en ny pickup
             }
         }
-
-
     }
 };
 
@@ -101,8 +104,4 @@ int managePickups::isDropOffActive(){
         }
     }
     return 0;
-}
-
-void managePickups::handleDropOff(){
-
 }

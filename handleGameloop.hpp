@@ -19,18 +19,19 @@ void gameloop(){
 
     enemyManager.initEnemies(); //initierar fiender in i listan från början
     
+    //fixa så spelarens position inte är public så vi inte kan ändra på den ;)
     
 
     while(!WindowShouldClose()){         
-                //playAudio();     
+                //playAudio();
+                Pickups.updatePlayerPos(player.position);
                 checkCameraMovment(&camera, &player.position, &player.orientation); //flyttar kameran efter spelaren
                 player.move(); //flyttar spelaren vid behov
                 healthPowerUp.move(player.position); //flyttar powerup
-
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
-                        Pickups.updatePickups(player.position);
+                        Pickups.updatePickups();
                         player.draw(); //draw player
                         healthPowerUp.draw(); //draw powerup
                         enemyManager.updateEnemies(player.position); //draw enemies

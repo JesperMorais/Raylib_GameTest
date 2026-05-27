@@ -1,0 +1,8 @@
+# CMake build directory (also holds the fetched raylib source/build tree)
+/build/
+
+# Build artifacts emitted into the project root
+/main.exe
+/main.pdb
+/main.ilk
+main.exe

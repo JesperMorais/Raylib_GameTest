@@ -15,7 +15,7 @@ void gameloop(){
     Player player; //initierar spelaren
     HealthPowerUp healthPowerUp; //initierar powerup
     Camera camera = initCamera3D(); //initierar kameran
-    EnemieManager enemyManager(15); //initierar ALLA typer av fiender, kan läggas till logik senare.
+    EnemieManager enemyManager(AMOUNT_ENEMIS); //initierar ALLA typer av fiender, kan läggas till logik senare.
 
     enemyManager.initEnemies(); //initierar fiender in i listan från början
     

@@ -6,6 +6,7 @@
 #include "include/raymath.h"
 #define ROOM_WIDTH 100
 #define ROOM_HEIGHT 100
+#define AMOUNT_ENEMIS 15
 
 using namespace std;
 
@@ -42,7 +43,7 @@ class Zoomies : public Enemies{
         static bool isModelLoaded; //kollar om modellen är laddad     
         //animations
         static int animCount; //antal animationer
-        static int animFrameCounter; //frame counter
+        //static int animFrameCounter; //frame counter
         static ZombieAnimationType currentAnimation; //nuvarande animation        
         static ModelAnimation* anim; //lista av animationer
     

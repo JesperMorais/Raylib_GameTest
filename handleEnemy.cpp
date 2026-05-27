@@ -5,8 +5,8 @@ Model Zoomies::zombieModel = {};
 bool Zoomies::isModelLoaded = false;
 int Zoomies::animCount = 0;
 ModelAnimation* Zoomies::anim = nullptr;
-int Zoomies::animFrameCounter = 0;
 ZombieAnimationType Zoomies::currentAnimation = WAVE;
+
 
 void Zoomies::loadZombieModel() {
     if (!isModelLoaded) {
@@ -17,16 +17,17 @@ void Zoomies::loadZombieModel() {
         anim = LoadModelAnimations(modelPath, &animCount);
     }
 }
-
+int current_loop = 0;
 void Zoomies::updateAnimation(ZombieAnimationType animType){
-    float currentTime = GetTime();
+    double currentTime = GetTime();
+    long long totalFrames = currentTime*60;
 
-    if(timeSinceAnimationChange > currentTime - timeSinceAnimationChange || currentAnimation != animType){
-        animFrameCounter = (animFrameCounter + 1)%animCount; //update frame counter så att animationen rullar
-        UpdateModelAnimation(zombieModel, anim[animType], animFrameCounter); //uppdaterar animationen
-        currentAnimation = animType;
-        cout << "Animation: " << animType << " is playing "<<endl;
-        timeSinceAnimationChange = currentTime;
+    UpdateModelAnimation(zombieModel, anim[animType], totalFrames % anim[animType].frameCount); //uppdaterar animationen
+    currentAnimation = animType;
+    
+    current_loop++;
+    if (current_loop <= AMOUNT_ENEMIS){
+        current_loop = 0;
     }
 }
 

@@ -1,8 +1,8 @@
 #pragma once
-#include "include/raylib.h"
+#include "raylib.h"
 #include <vector>
 #include <iostream>
-#include "include/raymath.h"
+#include "raymath.h"
 #include <corecrt.h>
 
 //fixa collision check för powerups i player

@@ -1,9 +1,9 @@
 #pragma once
-#include "include/raylib.h"
+#include "raylib.h"
 #include <vector>
 #include <iostream>
 #include <ctime>
-#include "include/raymath.h"
+#include "raymath.h"
 #define ROOM_WIDTH 100
 #define ROOM_HEIGHT 100
 #define AMOUNT_ENEMIS 15
@@ -49,6 +49,7 @@ class Zoomies : public Enemies{
     
     private:
         static void loadZombieModel(); //laddar in modellen
+        static int findAnim(const char* clipName); //hittar en animation via dess namn
         bool idleState = true;
         float speed; //should be random for every zombie
         unsigned int timeSinceAnimationChange = 0;

@@ -1,4 +1,5 @@
 #include "handleEnemy.hpp"
+#include <cstring>
 using namespace std;
 
 Model Zoomies::zombieModel = {};
@@ -17,22 +18,39 @@ void Zoomies::loadZombieModel() {
         anim = LoadModelAnimations(modelPath, &animCount);
     }
 }
-int current_loop = 0;
-void Zoomies::updateAnimation(ZombieAnimationType animType){
-    double currentTime = GetTime();
-    long long totalFrames = currentTime*60;
 
-    UpdateModelAnimation(zombieModel, anim[animType], totalFrames % anim[animType].frameCount); //uppdaterar animationen
-    currentAnimation = animType;
-    
-    current_loop++;
-    if (current_loop <= AMOUNT_ENEMIS){
-        current_loop = 0;
+// Find a clip by its base name, e.g. "Run". Handles both "CharacterArmature|Run"
+// and the bare "Run" duplicate, and is independent of the clips' load order.
+int Zoomies::findAnim(const char* clipName){
+    for (int i = 0; i < animCount; i++) {
+        const char* bar = strrchr(anim[i].name, '|'); // skip the "Armature|" prefix if present
+        const char* base = bar ? bar + 1 : anim[i].name;
+        if (strcmp(base, clipName) == 0) return i;
     }
+    return 0; // fallback to the first clip if the name isn't found
+}
+
+void Zoomies::updateAnimation(ZombieAnimationType animType){
+    // Map the abstract animation type to the actual clip name in the GLB.
+    const char* clipName;
+    switch (animType) {
+        case IDLE:      clipName = "Idle";       break;
+        case WAVE:      clipName = "Wave";       break;
+        case WALK:      clipName = "Walk";       break;
+        case RUNATTACK: clipName = "Run_Attack"; break;
+        case RUN:       clipName = "Run";        break;
+        case ATTACK:    clipName = "Punch";      break;
+        default:        clipName = "Idle";       break;
+    }
+    int idx = findAnim(clipName);
+
+    long long totalFrames = (long long)(GetTime() * 60);
+    UpdateModelAnimation(zombieModel, anim[idx], totalFrames % anim[idx].keyframeCount); //uppdaterar animationen
+    currentAnimation = animType;
 }
 
 void Zoomies::draw(){
-    DrawModel(zombieModel, position, 5.0f, WHITE);
+    DrawModel(zombieModel, position, 0.07f, WHITE);
 }
 
 void Zoomies::initRandomizePositions(){
@@ -59,7 +77,9 @@ void Zoomies::move(Vector3 playerPosition){
     position.x += speed * direction.x;
     position.z += speed * direction.z;
     
-    zombieModel.transform = MatrixRotateY(DEG2RAD * orientation.y);
+    // Stand the model upright (X correction), then yaw it to face its heading.
+    zombieModel.transform = MatrixMultiply(MatrixRotateX(DEG2RAD * 90.0f),
+                                           MatrixRotateY(DEG2RAD * orientation.y));
 }
 
 void Zoomies::checkIfIdle(Vector3 playerPosition){
@@ -124,7 +144,6 @@ int EnemieManager::checkCollision(Vector3 playerPosition, Vector3 playerOrientat
             if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) { //om fienden vi kollar på kolliderar med spelaren tar vi bort fienden och spawnar en ny samt retunerar 1
                 delete *it;
                 it = enemies.erase(it);
-                cout << "Removed Enemy with ID: " << (*it)->getID() << endl;
                 spawnEnemy();
                 return 1;
             }

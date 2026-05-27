@@ -1,6 +1,6 @@
 #pragma once
 
-#include "include/raylib.h"
+#include "raylib.h"
 #define __screenWidth 800
 #define __screenHeight 600
 

@@ -3,7 +3,6 @@
 #include <vector>
 #include <iostream>
 #include "raymath.h"
-#include <corecrt.h>
 
 //fixa collision check för powerups i player
 //fixa så att powerups inte spawnar på samma position som fiender

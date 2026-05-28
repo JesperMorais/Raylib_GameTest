@@ -1,7 +1,7 @@
 #include "handlePlayer.hpp"
 #include "handleCamera.hpp"
 #include "handleEnemy.hpp"  
-#include "handlePowerUps.hpp"
+#include "handlePowerups.hpp"
 #include "handleAudio.hpp"
 #include "handleMenu.hpp"
 #include "handleObjektiv.hpp"

@@ -8,5 +8,5 @@
 main.exe
 
 .vscode/*
-.vscode
+.vscode/settings.json
 main

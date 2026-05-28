@@ -1,15 +1,14 @@
 #include "handleGameloop.hpp"
 #include "handleEnemy.hpp"
+#include "global.hpp"
 #include <string>
 
 int main(){
-    const int screenWidth = 800;
-    const int screenHeight = 600;
-    InitWindow(screenWidth, screenHeight, "COOL GAME"); 
+    InitWindow(SCREENWIDTH, SCREENHEIGHT, "COOL GAME"); 
     Menu menu; //initierar menyn
     
     InitAudioDevice();
-    SetTargetFPS(60);   
+    SetTargetFPS(TARGETFPS);   
  
     while (!WindowShouldClose())    // Detect window close button or ESC key
     {   

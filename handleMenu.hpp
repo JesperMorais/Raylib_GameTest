@@ -1,8 +1,6 @@
 #pragma once
 
 #include "raylib.h"
-#define __screenWidth 800
-#define __screenHeight 600
 
 class Menu{
     public:

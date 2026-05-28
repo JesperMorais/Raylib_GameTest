@@ -1,4 +1,5 @@
 #include "handleEnemy.hpp"
+#include "global.hpp"
 #include <cstring>
 using namespace std;
 
@@ -44,7 +45,7 @@ void Zoomies::updateAnimation(ZombieAnimationType animType){
     }
     int idx = findAnim(clipName);
 
-    long long totalFrames = (long long)(GetTime() * 60);
+    long long totalFrames = (long long)(GetTime() * TARGETFPS);
     UpdateModelAnimation(zombieModel, anim[idx], totalFrames % anim[idx].keyframeCount); //uppdaterar animationen
     currentAnimation = animType;
 }

@@ -1,4 +1,5 @@
 #include "handleMenu.hpp"
+#include "global.hpp"
 
 void Menu::initmenu(){
     showMenu = true; //visar menyn
@@ -8,8 +9,8 @@ void Menu::initmenu(){
     
     image = LoadImage("models/backgrounds/real.png"); //laddar in bilden 
     textureImage = LoadTextureFromImage(image); //laddar in bilden som en texture
-    centerX = (__screenWidth - textureImage.width) / 2;
-    centerY = (__screenHeight - textureImage.height) / 2;
+    centerX = (SCREENWIDTH - textureImage.width) / 2;
+    centerY = (SCREENHEIGHT - textureImage.height) / 2;
 }
 
 void Menu::playMenu(){

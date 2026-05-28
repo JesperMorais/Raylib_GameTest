@@ -6,3 +6,7 @@
 /main.pdb
 /main.ilk
 main.exe
+
+.vscode/*
+.vscode
+main

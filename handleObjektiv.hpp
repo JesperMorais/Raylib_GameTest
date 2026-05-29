@@ -14,7 +14,7 @@ class schoolKids: public Pickups{
         Vector3 positon;
         bool IsActive = false; //är true när den blivit upp plockat
         schoolKids(){
-            positon = {10.0f, 0.0f, 10.0f};
+            positon = {5.0f, 0.0f, 5.0f};
         };
         
         void draw() override;
@@ -22,6 +22,8 @@ class schoolKids: public Pickups{
         void setPosition(Vector3 PlayerPos);
 
         bool getIsActive(){return IsActive;};
+
+        bool pickedUp = false;
 
 };
 

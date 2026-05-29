@@ -29,6 +29,7 @@ class Player{
         int coins = 0;
         float maxSpeed;
         Vector3 currentSpeed {0.0f, 0.0f, 0.0f};
+        
         Player(){position = {0.0f, 0.0f, 0.0f}, orientation = {0.0f, 0.0f, 0.0f}, maxSpeed = 0.5f;
             particles.resize(50); //skapar 100 partiklar
              for (auto& p : particles) {
@@ -45,4 +46,5 @@ class Player{
         void updateParticles(float deltaTime); //uppdaterar partiklar tar in frames per second
         void drawParticles();
         void DrawWireBox();
+        int checkCollision(Vector3 enemyPosition);
 };

@@ -3,6 +3,7 @@
 #include <vector>
 #include <iostream>
 #include <ctime>
+#include "handlePlayer.hpp"
 #include "raymath.h"
 #define ROOM_WIDTH 100
 #define ROOM_HEIGHT 100
@@ -27,8 +28,8 @@ class Enemies{
         virtual void draw() = 0; //Ritar ut fienden på spelplanen
         virtual void move(Vector3 position) = 0; //flyttar spelaren
         virtual void initRandomizePositions() = 0; //initerar fienden med random positioner
-        virtual int checkCollisionWithPlayer(const Vector3 playerPosition, const Vector3 playetOrientation) = 0;
         virtual int getID() = 0;
+        virtual Vector3 getPosition() = 0;
 };
 
 
@@ -61,14 +62,13 @@ class Zoomies : public Enemies{
         void initRandomizePositions() override; //gives random positions to the zombies only when they are created
         void checkIfIdle(Vector3 playerPosition); //updates the idle state of the zombie
         void updateAnimation(ZombieAnimationType animType); //updates the animation of the zombie
-
     public: 
+        Vector3 getPosition(){return position;};
         int getID()override{return id;} //returnerar id för varje zombie
         int id; //unikt id för varje zombie
         Zoomies(); //constructor    
         void draw() override;
         void move(Vector3 position) override; //tar in spelarens position kollar även om den är idle
-        int checkCollisionWithPlayer(const Vector3 playerPosition, const Vector3 playetOrientation)override; //kollar om spelaren kolliderar med fienden  
 };
 
 class EnemieManager{
@@ -87,6 +87,6 @@ class EnemieManager{
     void initEnemies(); //initiates enemies into the list
     void spawnEnemy(); //spawns a new enemy
     void updateEnemies(Vector3 playerPosition); //moves and draws the enemies
-    int checkCollision(Vector3 playerPosition, Vector3 playerOrientation); //checks if the player collides with an enemy return 1 if true
+    int checkCollision(Player player); //checks if the player collides with an enemy return 1 if true
 };
 

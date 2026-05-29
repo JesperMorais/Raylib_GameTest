@@ -32,15 +32,18 @@ void gameloop(){
                         player.draw(); //draw player
                         healthPowerUp.draw(); //draw powerup
                         enemyManager.updateEnemies(player.position); //draw enemies
-                        if(enemyManager.checkCollision(player.position, player.orientation))
+                        if(enemyManager.checkCollision(player))
                             player.takeDamage(); //kollar om spelaren kolliderar med fienden
                         
+                        if(player.checkCollision(healthPowerUp.position)){
+                            healthPowerUp.position = {player.position.x, player.position.y, player.position.z};
+                        }
                         DrawModel(model, {0.0f, 0.0f, 0.0f}, 300.0f, WHITE); //ritar ut modellen
                     EndMode3D();
+                    DrawText(TextFormat("COINS: %i", player.coins), 10, 10, 30, GREEN);
+                    DrawText(TextFormat("Pickps: %d", Pickups.getPickupSize()), 10, 20 , 30, BLACK);
 
                 EndDrawing();
-                DrawText(TextFormat("COINS: %i", player.coins), 10, 10, 30, GREEN);
-                DrawText(TextFormat("Pickps: %d", Pickups.getPickupSize()), 10, 20 , 30, BLACK);
     }
 }
 

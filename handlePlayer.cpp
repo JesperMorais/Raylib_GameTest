@@ -106,3 +106,25 @@ void Player::DrawWireBox(){
 
 }
 
+int Player::checkCollision(Vector3 enemyPosition){
+    // Return 1 if collision else 0
+    //take values of target and compare to player
+    // since player is central part of the game, I think its simpler
+    // to just have 1 total collision checking func for all.
+    // TODO CHECK THESE AGAIN PLEAS
+    float busWidth = 4.0f; // Example width
+    float busHeight = 1.0f; // Example height
+    float busLength = 8.0f; // Example length
+
+    // Scale factors for the collision detection spheres
+    float scaleFactorX = busWidth / 2.0f;
+    float scaleFactorY = busHeight / 2.0f;
+    float scaleFactorZ = busLength / 2.0f;
+    if (CheckCollisionSpheres(position, scaleFactorX,enemyPosition , 1.0f) || //spelarens position, spelarens storlek, fiendens position, fiendens storlek
+        CheckCollisionSpheres(position, scaleFactorY, enemyPosition, 1.0f) ||
+        CheckCollisionSpheres(position, scaleFactorZ, enemyPosition, 1.0f)) {
+        return 1;      
+    }  
+    return 0;
+}
+

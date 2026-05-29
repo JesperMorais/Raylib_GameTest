@@ -95,25 +95,6 @@ void Zoomies::checkIfIdle(Vector3 playerPosition){
     }
 }
 
-int Zoomies::checkCollisionWithPlayer(const Vector3 playerPosition, const Vector3 playerOrientation){ 
-    float busWidth = 4.0f; // Example width
-    float busHeight = 1.0f; // Example height
-    float busLength = 8.0f; // Example length
-
-    // Scale factors for the collision detection spheres
-    float scaleFactorX = busWidth / 2.0f;
-    float scaleFactorY = busHeight / 2.0f;
-    float scaleFactorZ = busLength / 2.0f;
-    // Check collision along each axis
-
-    if (CheckCollisionSpheres(playerPosition, scaleFactorX, position, 1.0f) || //spelarens position, spelarens storlek, fiendens position, fiendens storlek
-        CheckCollisionSpheres(playerPosition, scaleFactorY, position, 1.0f) ||
-        CheckCollisionSpheres(playerPosition, scaleFactorZ, position, 1.0f)) {
-        return 1;      
-    }  
-    return 0;
-}
-
 int Zoomies::ID = 0;
 
 Zoomies::Zoomies(): speed(0.1f), id(++ID) { //constructor
@@ -140,14 +121,20 @@ void EnemieManager::updateEnemies(Vector3 playerPosition){
     }
 }
 
-int EnemieManager::checkCollision(Vector3 playerPosition, Vector3 playerOrientation){
+int EnemieManager::checkCollision(Player player){
         for (auto it = enemies.begin(); it != enemies.end(); ++it) { //Vi går igenom listan av fiender tills den är slut
-            if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) { //om fienden vi kollar på kolliderar med spelaren tar vi bort fienden och spawnar en ny samt retunerar 1
+            if(player.checkCollision((*it)->getPosition())){
                 delete *it;
                 it = enemies.erase(it);
                 spawnEnemy();
                 return 1;
             }
+            // if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) { //om fienden vi kollar på kolliderar med spelaren tar vi bort fienden och spawnar en ny samt retunerar 1
+            //     delete *it;
+            //     it = enemies.erase(it);
+            //     spawnEnemy();
+            //     return 1;
+            // }
         }
         return 0;
 }

@@ -7,10 +7,16 @@ void schoolKids::draw(){ // ska rita ut enskild pickup
     //fixa model och annat skit
 }
 
-
-
 int schoolKids::checkCollision(const Vector3 PlayerPos){ //kolla om enskild pickup kan bli upp plockad av spelaren
     return 0;
+}
+
+void schoolKids::setPosition(Vector3 PlayerPos){
+    if(pickedUp){
+        positon.x = PlayerPos.x;
+        positon.y = PlayerPos.x + 5.0f;
+        positon.z = PlayerPos.z;
+    }
 }
 
 void managePickups::updatePickups(Vector3 playerPos){

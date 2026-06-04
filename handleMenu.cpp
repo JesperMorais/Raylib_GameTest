@@ -9,8 +9,8 @@ void Menu::initmenu(){
     
     image = LoadImage("models/backgrounds/reaL.png"); //laddar in bilden 
     textureImage = LoadTextureFromImage(image); //laddar in bilden som en texture
-    centerX = (SCREENWIDTH - textureImage.width) / 2;
-    centerY = (SCREENHEIGHT - textureImage.height) / 2;
+    centerX = (800 - textureImage.width) / 2;
+    centerY = (600 - textureImage.height) / 2;
 }
 
 void Menu::playMenu(){

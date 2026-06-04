@@ -35,7 +35,7 @@ class Player{
              for (auto& p : particles) {
                 p.position = {position.x + 0.1f, position.y-1.0f, position.z + GetRandomValue(-1.0f, 1.0f) };
                 p.velocity = {(float)GetRandomValue(-1.0f, 1.0f), 0.0f, (float)GetRandomValue(-1.0f, 1.0f)};
-        }
+            }
         modelPath = "models/bussTest3.glb";
         bussModel = LoadModel(modelPath); 
         } //konstruktor

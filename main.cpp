@@ -1,26 +1,8 @@
-#include "handleGameloop.hpp"
-#include "handleEnemy.hpp"
-#include "global.hpp"
-#include <string>
+#include "game.hpp"
 
 int main(){
-    InitWindow(SCREENWIDTH, SCREENHEIGHT, "COOL GAME"); 
-    Menu menu; //initierar menyn
-    
-    InitAudioDevice();
-    SetTargetFPS(TARGETFPS);   
- 
-    while (!WindowShouldClose())    // Detect window close button or ESC key
-    {   
-            if(menu.getShowMenu()){ //kollar om vi ska vara inne i menyn eller inte
-                menu.playMenu();
-            }
-            else{
-                gameloop();
-            } 
-    }
-    CloseWindow();
-    CloseAudioDevice();
+    Game game;
+    game.start();
     return 0;
 }
 

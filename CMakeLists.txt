@@ -23,6 +23,9 @@ FetchContent_MakeAvailable(raylib)
 # headers that are #included, so only the .cpp files are listed here.
 add_executable(main
     main.cpp
+    game.cpp
+    screen.cpp
+    handleCamera.cpp
     handlePlayer.cpp
     handleEnemy.cpp
     handleMenu.cpp

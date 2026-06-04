@@ -1,17 +1,74 @@
-# Concept
-You are a school bussdriver, in a zombie appocalypse. Your job ordinary, you drive kids from and too school. Only caviat, there are zombies on the street. You, kill zombies on your way to and from schools and homes. Upgrade your buss with the money the parents give you once you have helped them. 
+# School Bus of the Dead
 
-The game have rounds/days. Each day you have X amount of kids to pickup and each have  to get home. Once you are done the day ends and you can upgrade your truck for the coming day. Each day comes with new challanges. more zombies, new varients, maybe the world has changed overnight, the bridge you took the day before is now broken.
+> My first raylib attempt at making a game.
 
-Zombies can reach your buss and damage it, so if you are not careful you are the passangers will die. No make that no happend, buying upgrades like, automatic guns, snowplow ( with spikes ), give the kids guns etc etc.
+## Concept
 
-  1. Close the loop once — one kid, fixed school, coins on delivery. (unchanged, top priority)
-  2. Combat feel pass — moved up. Make running over / shooting zombies feel good before adding more structure. This is your pillar; prove it's fun early.
-  3. Make it a day — N kids, "day done," summary screen; gameloop returns instead of looping forever.
-  4. One driving-changing upgrade — snowplow or auto-gun, coins → visible effect.
-  5. Difficulty ramp — day number → zombie count/speed/variant.
-  6. Scripted world-change — the broken-bridge day. Your hook, now cheap because the map is fixed.
+You are a school bus driver in a zombie apocalypse. Your job is ordinary:
+drive kids to and from school. The one catch — the streets are full of zombies.
 
-My first raylib attempt at making a game. 
-Game update:
+You plow through (and shoot) zombies on your routes, deliver every kid safely,
+and the grateful parents pay you. Use that money to upgrade your bus for the
+days ahead.
+
+The game is structured in **days/rounds**. Each day you have a number of kids to
+pick up and get home. Once everyone is delivered, the day ends and you spend
+your earnings on upgrades for tomorrow. Every new day raises the stakes: more
+zombies, new variants, and a world that changes overnight — the bridge you took
+yesterday might be broken today.
+
+Zombies can reach the bus and damage it. Be careless and you — and your
+passengers — die. Keep everyone alive with upgrades like automatic guns, a
+spiked snowplow, or by handing the kids guns of their own.
+
+## Design Pillars (decided scope)
+
+- **Action-first.** The core fun is *driving and slaughtering zombies*. The
+  kids and routes are the frame; the moment-to-moment drive is the game.
+- **Upgrades are felt, not stats.** Every upgrade visibly changes how the bus
+  drives or kills (snowplow, auto-guns, spiked ram, armed kids) — no invisible
+  "+5%" bonuses.
+- **The day loop is a thin wrapper.** Days give structure and a reason to spend
+  money. Briefing → drive → summary/shop → repeat. Kept minimal on purpose.
+- **Fixed, handcrafted map.** One designed town, reused each day. "The world
+  changed overnight" (broken bridge, blocked road) is a *scripted* variant of
+  that map, not procedural generation.
+
+### Scope target
+
+A polished, satisfying playable loop — built as a learning project, aimed at a
+**free release on itch.io**. Not commercial.
+
+## Roadmap
+
+Each milestone is a playable vertical slice you can hand to a friend.
+
+1. **Close the loop once** — one kid, fixed school, coins on delivery.
+   *(top priority)*
+2. **Combat feel pass** — make running over / shooting zombies *feel good*
+   before adding more structure. This is the pillar; prove it's fun early.
+3. **Make it a day** — N kids, a "day done" condition, a summary screen;
+   the game loop returns instead of looping forever.
+4. **One driving-changing upgrade** — snowplow or auto-gun: coins → visible
+   effect.
+5. **Difficulty ramp** — day number → zombie count / speed / variant.
+6. **Scripted world-change** — the broken-bridge day. The hook, now cheap
+   because the map is fixed.
+
+## Architecture (planned)
+
+Three boxes — *what's loaded*, *what's persisting*, *what's running*:
+
+- **Game / Assets** — loaded once, never reset: map model, zombie mesh, sounds,
+  fonts. Owns the window, audio, and the state machine.
+- **Session** — one playthrough's live data, shared by every screen, reset only
+  on "new game": coins, day number, upgrades owned, the bus.
+- **State** — the screen running now (Menu, Driving, Shop, Game Over) plus its
+  own throwaway pieces (today's live zombies). Swapped by a `StateManager`.
+
+The game loop is a **state machine**: a screen hands control back instead of
+looping forever, and one owner decides what screen runs next.
+
+## Game update
+
 ![alt text](image.png)

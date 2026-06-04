@@ -3,9 +3,7 @@
 #include <iostream>
 
 void DriveScreen::draw(){
-    BeginMode3D(camera);          // everything between here and EndMode3D
-        // Draw buss                is rendered through the camera
-        // Draw enemies
+    BeginMode3D(camera);          
         // Draw enviorment'
         enemies.drawEnemies();
         player.draw();
@@ -15,10 +13,19 @@ void DriveScreen::draw(){
 
 Screen* DriveScreen::update(Session* sesh){
     // update() is pure logic: move things and slide the camera. No drawing here.
-    
     player.move();
     enemies.moveEnemies(player.position);
+    if (enemies.getMaxEnemies() != (sesh->days * 3)){ // Update sesh days
+        enemies.setMaxEnemies(sesh->days * 3);
+    }
+    if(enemies.checkCollision(player)){
+        sesh->coins++;
+        cout << "coints now at: " << sesh->coins << endl;
+    }
     checkCameraMovment(&camera, &player.position, &player.orientation);
+    if (IsKeyPressed(KEY_G)){
+        return new MenuScreen;
+    }
     return this;
 }
 

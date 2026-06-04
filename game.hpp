@@ -13,7 +13,7 @@ class Game{
     const int SCREENHEIGHT = 600;
     bool running;
     Screen* current;
-    Session* current_session;
+    Session* current_session = new Session;
 
     void swapScreens(Screen* next){
         delete current;
@@ -23,6 +23,8 @@ class Game{
         InitWindow(SCREENWIDTH, SCREENHEIGHT, "cool game<");
         InitAudioDevice();
         this->running = true;
+        current_session->coins = 0;
+        current_session->days = 1;
         current = new MenuScreen; // start at menu Screen
         std::cout << "Game init " << this->running << std::endl;
     }
@@ -30,6 +32,7 @@ class Game{
     ~Game(){
         CloseWindow();
         CloseAudioDevice();
+        delete current_session;
     }
     void start();
 };

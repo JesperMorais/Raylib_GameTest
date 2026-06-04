@@ -19,9 +19,10 @@ class DriveScreen : public Screen{
     //Spelare
     //Camera
     public:
+        const char* coinDraw = "2";
         Camera camera;            // just data — the bus's chase cam
         Player player;
-        EnemieManager enemies{4};   // braces, not parens, for in-class init
+        EnemieManager enemies{3};   // braces, not parens, for in-class init
         DriveScreen(){
             enemies.initEnemies();
             camera = initCamera3D();   // build it once when we enter the drive screen

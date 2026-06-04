@@ -84,6 +84,8 @@ class EnemieManager{
                 delete enemy;
             }
         }
+    void setMaxEnemies(int amount){ maxEnemies = amount; } //sets the max amount of enemies
+    int getMaxEnemies(){ return maxEnemies; } //returns the max amount of enemies
     void initEnemies(); //initiates enemies into the list
     void spawnEnemy(); //spawns a new enemy
     void moveEnemies(Vector3 playerPosition); //logic: moves every enemy toward the player

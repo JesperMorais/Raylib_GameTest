@@ -86,7 +86,8 @@ class EnemieManager{
         }
     void initEnemies(); //initiates enemies into the list
     void spawnEnemy(); //spawns a new enemy
-    void updateEnemies(Vector3 playerPosition); //moves and draws the enemies
+    void moveEnemies(Vector3 playerPosition); //logic: moves every enemy toward the player
+    void drawEnemies();                        //rendering: draws every enemy
     int checkCollision(Player player); //checks if the player collides with an enemy return 1 if true
 };
 

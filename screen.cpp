@@ -7,7 +7,7 @@ void DriveScreen::draw(){
         // Draw buss                is rendered through the camera
         // Draw enemies
         // Draw enviorment'
-        enemies.updateEnemies(player.position);
+        enemies.drawEnemies();
         player.draw();
     EndMode3D();
     return;
@@ -17,6 +17,7 @@ Screen* DriveScreen::update(Session* sesh){
     // update() is pure logic: move things and slide the camera. No drawing here.
     
     player.move();
+    enemies.moveEnemies(player.position);
     checkCameraMovment(&camera, &player.position, &player.orientation);
     return this;
 }

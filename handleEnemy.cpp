@@ -114,9 +114,14 @@ void EnemieManager::spawnEnemy(){
     }
 }
 
-void EnemieManager::updateEnemies(Vector3 playerPosition){
+void EnemieManager::moveEnemies(Vector3 playerPosition){
     for(auto& enemy : enemies){
         enemy->move(playerPosition);
+    }
+}
+
+void EnemieManager::drawEnemies(){
+    for(auto& enemy : enemies){
         enemy->draw();
     }
 }

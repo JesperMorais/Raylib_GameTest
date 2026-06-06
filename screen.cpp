@@ -19,7 +19,10 @@ Screen* DriveScreen::update(Session* sesh){
     enemies.moveEnemies(player.position);
     if (enemies.getMaxEnemies() != (sesh->days * 3)){ // Update sesh days
         enemies.setMaxEnemies(sesh->days * 3);
+        enemies.initEnemies();
+        cout << "zombies set to:" << sesh->days * 3 << endl;
     }
+
     if(enemies.checkCollision(player)){
         sesh->coins++;
         cout << "coints now at: " << sesh->coins << endl;

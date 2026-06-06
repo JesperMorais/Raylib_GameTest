@@ -91,5 +91,6 @@ class EnemieManager{
     void moveEnemies(Vector3 playerPosition); //logic: moves every enemy toward the player
     void drawEnemies();                        //rendering: draws every enemy
     int checkCollision(Player player); //checks if the player collides with an enemy return 1 if true
+    size_t getEnemiesSize(){return this->enemies.size();}; // todo add guardrails if enemies its not init yet
 };
 

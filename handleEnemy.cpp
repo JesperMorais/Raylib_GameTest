@@ -131,7 +131,7 @@ int EnemieManager::checkCollision(Player player){
             if(player.checkCollision((*it)->getPosition())){
                 delete *it;
                 it = enemies.erase(it);
-                spawnEnemy();
+                //spawnEnemy();
                 return 1;
             }
             // if ((*it)->checkCollisionWithPlayer(playerPosition, playerOrientation)) { //om fienden vi kollar på kolliderar med spelaren tar vi bort fienden och spawnar en ny samt retunerar 1

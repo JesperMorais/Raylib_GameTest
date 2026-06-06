@@ -11,7 +11,7 @@ void Game::start(){
         }
         BeginDrawing();
         ClearBackground(WHITE);
-        current->draw();
+        current->draw(current_session);
         EndDrawing();
 
     }

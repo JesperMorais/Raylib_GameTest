@@ -7,6 +7,7 @@ void DriveScreen::draw(Session* sesh){
         // Draw enviorment'
         enemies.drawEnemies();
         player.draw();
+        mp.draw();
     EndMode3D();
     DrawText(TextFormat("COINS: %i", sesh->coins), 10, 10, 30, GREEN);
     DrawText(TextFormat("DAYS: %i", sesh->days), 10, 40, 30, BLUE);
@@ -20,18 +21,16 @@ Screen* DriveScreen::update(Session* sesh){
     if (enemies.getMaxEnemies() != (sesh->days * 3)){ // Update sesh days
         enemies.setMaxEnemies(sesh->days * 3);
         enemies.initEnemies();
-        cout << "zombies set to:" << sesh->days * 3 << endl;
     }
 
     if(enemies.checkCollision(player)){
         sesh->coins++;
-        cout << "coints now at: " << sesh->coins << endl;
     }
     checkCameraMovment(&camera, &player.position, &player.orientation);
     if (IsKeyPressed(KEY_G)){
         return new MenuScreen;
     }
-
+    mp.update(player.position);
     if(enemies.getEnemiesSize() < 1){
         return new EndDayScren;
     }

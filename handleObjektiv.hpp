@@ -8,6 +8,7 @@ class Pickups{
     public:
         virtual void draw() = 0; //rita ut picupen
         virtual int checkCollision(const Vector3 playerpos) = 0;
+        virtual void move(Vector3 PlayerPos) = 0;
 };
 
 class schoolKids: public Pickups{
@@ -17,10 +18,9 @@ class schoolKids: public Pickups{
         schoolKids(){
             positon = {5.0f, 0.0f, 5.0f};
         };
-        
         void draw() override;
         int checkCollision(const Vector3 PlayerPos) override;
-        void setPosition(Vector3 PlayerPos);
+        void move(Vector3 PlayerPos) override;
 
         bool getIsActive(){return IsActive;};
 
@@ -36,9 +36,7 @@ class managePickups{
             spawnPickup(); //initierar Pickups.
         };
         void spawnPickup();
-        void updatePickups(Vector3 playerPosition);
-
-    
-        int getPickupSize(){
-            return (int)activePickups.size();};
+        void draw();
+        void update(Vector3 playerpos);
+        int getPickupSize(){return (int)activePickups.size();};
 };

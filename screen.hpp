@@ -4,10 +4,10 @@
 #include "handleEnemy.hpp"
 #include "handleCamera.hpp"
 #include "handlePlayer.hpp"
+#include "handleObjektiv.hpp"
 #include "raylib.h"
 
 class Screen {
-    
     public:
         virtual Screen* update(Session* sesh)  = 0; // Should update the screen with relevant info aswell as return the screen to process
         virtual void draw(Session* sesh) = 0;
@@ -19,10 +19,10 @@ class DriveScreen : public Screen{
     //Spelare
     //Camera
     public:
-        const char* coinDraw = "2";
         Camera camera;            // just data — the bus's chase cam
         Player player;
         EnemieManager enemies{3};   // braces, not parens, for in-class init
+        managePickups mp;
         DriveScreen(){
             enemies.initEnemies();
             camera = initCamera3D();   // build it once when we enter the drive screen

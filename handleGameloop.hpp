@@ -28,7 +28,7 @@ void gameloop(){
                 BeginDrawing();
                     ClearBackground(RAYWHITE);
                     BeginMode3D(camera); 
-                        Pickups.updatePickups(player.position);
+                        Pickups.draw(player.position);
                         player.draw(); //draw player
                         healthPowerUp.draw(); //draw powerup
                         enemyManager.updateEnemies(player.position); //draw enemies

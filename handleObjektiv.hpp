@@ -2,30 +2,27 @@
 #include "raylib.h"
 #include <vector>
 #include <iostream>
+#include "handlePlayer.hpp"
 using namespace std;
 
 class Pickups{
     public:
         virtual void draw() = 0; //rita ut picupen
-        virtual int checkCollision(const Vector3 playerpos) = 0;
         virtual void move(Vector3 PlayerPos) = 0;
+        bool getIsActiveDrop()const{return IsActiveDrop;};
+        Vector3 positon;
+        Vector3 dropPosition;
+        bool IsActiveDrop = false;
+        bool pickedUp = false;
 };
 
 class schoolKids: public Pickups{
     public:
-        Vector3 positon;
-        bool IsActive = false; //är true när den blivit upp plockat
         schoolKids(){
             positon = {5.0f, 0.0f, 5.0f};
         };
         void draw() override;
-        int checkCollision(const Vector3 PlayerPos) override;
         void move(Vector3 PlayerPos) override;
-
-        bool getIsActive(){return IsActive;};
-
-        bool pickedUp = false;
-
 };
 
 class managePickups{
@@ -37,6 +34,6 @@ class managePickups{
         };
         void spawnPickup();
         void draw();
-        void update(Vector3 playerpos);
+        void update(Player* player);
         int getPickupSize(){return (int)activePickups.size();};
 };

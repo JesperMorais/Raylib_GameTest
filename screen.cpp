@@ -30,7 +30,8 @@ Screen* DriveScreen::update(Session* sesh){
     if (IsKeyPressed(KEY_G)){
         return new MenuScreen;
     }
-    mp.update(player.position);
+
+    mp.update(&player);
     if(enemies.getEnemiesSize() < 1){
         return new EndDayScren;
     }

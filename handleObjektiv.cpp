@@ -1,29 +1,13 @@
 #include "handleObjektiv.hpp"
-
+#include "handlePlayer.hpp"
  
 void schoolKids::draw(){ // ska rita ut enskild pickup
     DrawSphere(positon, 2.0f, PURPLE);
-    IsActive = true;
+    
+    if(IsActiveDrop == true){
+        DrawSphere(dropPosition, 3.0f, BLACK);
+    }
     //fixa model och annat skit
-}
-
-int schoolKids::checkCollision(const Vector3 PlayerPos){ //kolla om enskild pickup kan bli upp plockad av spelaren
-    float busWidth = 4.0f; // Example width
-    float busHeight = 1.0f; // Example height
-    float busLength = 8.0f; // Example length
-
-    // Scale factors for the collision detection spheres
-    float scaleFactorX = busWidth / 2.0f;
-    float scaleFactorY = busHeight / 2.0f;
-    float scaleFactorZ = busLength / 2.0f;
-    if (CheckCollisionSpheres(PlayerPos, scaleFactorX,positon , 1.0f) || //spelarens position, spelarens storlek, fiendens position, fiendens storlek
-        CheckCollisionSpheres(PlayerPos, scaleFactorY, positon, 1.0f) ||
-        CheckCollisionSpheres(PlayerPos, scaleFactorZ, positon, 1.0f)) {
-        pickedUp = true;
-        return 1;      
-    }  
-    return 0;
-
 }
 
 void schoolKids::move(Vector3 PlayerPos){
@@ -34,12 +18,28 @@ void schoolKids::move(Vector3 PlayerPos){
     }
 }
 
-void managePickups::update(Vector3 playerPos){
+void managePickups::update(Player* player){
     
     // check for dropoff etc
     for(auto& pickups : activePickups){
-        pickups->checkCollision(playerPos);
-        pickups->move(playerPos);
+        // Check if we can ppickup the pickup
+        pickups->move(player->position);
+
+        if(player->checkCollision(pickups->positon) && pickups->pickedUp != true){
+            pickups->pickedUp = true;
+        }
+        //check if drop can be pickuped up.
+        if(pickups->pickedUp){
+            if(player->checkCollision(pickups->dropPosition)){
+                pickups->pickedUp = false;
+                pickups->positon = {player->position.x +10,player->position.y, player->position.z + 10};
+            }
+        }
+        if(pickups->pickedUp == true && pickups->getIsActiveDrop() == false){
+            //spawn drop
+            pickups->dropPosition = {pickups->positon.x + 4, pickups->positon.y, pickups->positon.z+4};
+            pickups->IsActiveDrop = true;
+        }
     }
 }
 

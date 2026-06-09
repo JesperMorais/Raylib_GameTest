@@ -12,7 +12,7 @@ void Player::draw(){
     Matrix initialCorrection = MatrixRotateY(DEG2RAD * 180.0f); // Initial rotation correction for the model
     bussModel.transform = MatrixMultiply(rotation, initialCorrection); // Combine rotation with initial correction
 
-    DrawModel(bussModel, modelPosition, 1.0f, WHITE); // Draw the model at the translated position
+    DrawModelEx(bussModel, modelPosition, {0,1,0}, orientation.y, {1,1,1}, WHITE); // Draw the model at the translated position
     DrawGrid(10, 1.0f);
 
     //DrawWireBox(); //rita en wirebox runt bussen för debugging

@@ -9,8 +9,13 @@ void DriveScreen::draw(Session* sesh){
         player.draw();
         mp.draw();
     EndMode3D();
-    DrawText(TextFormat("COINS: %i", sesh->coins), 10, 10, 30, GREEN);
+    DrawText(TextFormat("HEALTH: %i", player.health), 10, 10, 30, RED);
     DrawText(TextFormat("DAYS: %i", sesh->days), 10, 40, 30, BLUE);
+    
+    // Health bar: one red block per point, laid out right-to-left from x=700.
+    for (int i = 0; i < player.health; i++){
+        DrawRectangle(700 - i * 40, 10, 40, 10, RED);
+    }
     return;
 }
 
@@ -24,7 +29,7 @@ Screen* DriveScreen::update(Session* sesh){
     }
 
     if(enemies.checkCollision(player)){
-        sesh->coins++;
+        player.health--;
     }
     checkCameraMovment(&camera, &player.position, &player.orientation);
     if (IsKeyPressed(KEY_G)){

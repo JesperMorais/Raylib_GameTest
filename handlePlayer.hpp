@@ -29,6 +29,7 @@ class Player{
         int coins = 0;
         float maxSpeed;
         Vector3 currentSpeed {0.0f, 0.0f, 0.0f};
+        int health = 3; //Start off at 3
         
         Player(){position = {0.0f, 0.0f, 0.0f}, orientation = {0.0f, 0.0f, 0.0f}, maxSpeed = 0.5f;
             particles.resize(50); //skapar 100 partiklar

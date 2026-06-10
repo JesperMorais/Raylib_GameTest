@@ -6,33 +6,28 @@
 #include "state.hpp"
 #include "screen.hpp"
 #include "session.hpp"
+#include <memory>
 
 class Game{
     public:
     const int SCREENWIDTH = 800;
     const int SCREENHEIGHT = 600;
     bool running;
-    Screen* current;
-    Session* current_session = new Session;
+    std::unique_ptr<Screen> current = std::make_unique<MenuScreen>();
+    std::unique_ptr<Session> current_session = std::make_unique<Session>();
 
-    void swapScreens(Screen* next){
-        delete current;
-        current = next;
-    }
     Game(){
         InitWindow(SCREENWIDTH, SCREENHEIGHT, "cool game<");
         InitAudioDevice();
         this->running = true;
         current_session->coins = 0;
         current_session->days = 1;
-        current = new MenuScreen; // start at menu Screen
         std::cout << "Game init " << this->running << std::endl;
     }
 
     ~Game(){
         CloseWindow();
         CloseAudioDevice();
-        delete current_session;
     }
     void start();
 };

@@ -6,10 +6,11 @@
 #include "handlePlayer.hpp"
 #include "handleObjektiv.hpp"
 #include "raylib.h"
+#include <memory>
 
 class Screen {
     public:
-        virtual Screen* update(Session* sesh)  = 0; // Should update the screen with relevant info aswell as return the screen to process
+        virtual std::unique_ptr<Screen> update(Session* sesh)  = 0; // Should update the screen with relevant info aswell as return the screen to process
         virtual void draw(Session* sesh) = 0;
 };
 
@@ -28,14 +29,14 @@ class DriveScreen : public Screen{
             camera = initCamera3D();   // build it once when we enter the drive screen
         }
         void draw(Session* sesh) override;
-        Screen* update(Session* sesh) override;
+        std::unique_ptr<Screen> update(Session* sesh) override;
 };
 
 class EndDayScren : public Screen{
     // When day is over, we come here, upgrade rebuild etc.
     public:
         void draw(Session* sesh) override;
-        Screen* update(Session* sesh) override;
+        std::unique_ptr<Screen> update(Session* sesh) override;
         Rectangle returnButton; // return button
         Color returnColor;
         EndDayScren(){
@@ -51,5 +52,5 @@ class MenuScreen : public Screen{
         menu.initmenu();
     }
         void draw(Session* sesh) override;
-        Screen* update(Session* sesh) override;
+        std::unique_ptr<Screen> update(Session* sesh) override;
 };

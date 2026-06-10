@@ -1,6 +1,7 @@
 #include "screen.hpp"
 #include "state.hpp"
 #include <iostream>
+#include <memory>
 
 void DriveScreen::draw(Session* sesh){
     BeginMode3D(camera);          
@@ -19,7 +20,7 @@ void DriveScreen::draw(Session* sesh){
     return;
 }
 
-Screen* DriveScreen::update(Session* sesh){
+std::unique_ptr<Screen> DriveScreen::update(Session* sesh){
     // update() is pure logic: move things and slide the camera. No drawing here.
     player.move();
     enemies.moveEnemies(player.position);
@@ -33,15 +34,15 @@ Screen* DriveScreen::update(Session* sesh){
     }
     checkCameraMovment(&camera, &player.position, &player.orientation);
     if (IsKeyPressed(KEY_G)){
-        return new MenuScreen;
+        return std::make_unique<MenuScreen>();
     }
 
     mp.update(&player);
     if(enemies.getEnemiesSize() < 1){
-        return new EndDayScren;
+        return std::make_unique<EndDayScren>();
     }
 
-    return this;
+    return nullptr;
 }
 
 void EndDayScren::draw(Session* sesh){
@@ -51,23 +52,23 @@ void EndDayScren::draw(Session* sesh){
     DrawText("New day", 320, 310, 40, WHITE);
 }
 
-Screen* EndDayScren::update(Session* sesh){
+std::unique_ptr<Screen> EndDayScren::update(Session* sesh){
     bool hover   = CheckCollisionPointRec(GetMousePosition(), returnButton);
     bool clicked = IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_ENTER);
     if (hover && clicked) {
         sesh->days++;
-        return new DriveScreen();  // leave the menu
+        return std::make_unique<DriveScreen>();
     }
-    return this;                                     // otherwise keep showing the menu
+    return nullptr;                                     // otherwise keep showing the menu
 }
 
 //Checks if we have presses button or not.
-Screen* MenuScreen::update(Session* sesh){
+std::unique_ptr<Screen> MenuScreen::update(Session* sesh){
     bool hover   = CheckCollisionPointRec(GetMousePosition(), menu.startButton);
     bool clicked = IsMouseButtonPressed(MOUSE_LEFT_BUTTON) || IsKeyPressed(KEY_ENTER);
 
-    if (hover && clicked) return new DriveScreen();  // leave the menu
-    return this;                                     // otherwise keep showing the menu
+    if (hover && clicked) return std::make_unique<DriveScreen>(); // leave the menu
+    return nullptr;                                     // otherwise keep showing the menu
 }
 
 void MenuScreen::draw(Session* sesh){
